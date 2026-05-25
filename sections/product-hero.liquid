@@ -105,7 +105,7 @@
       {%- endfor -%}
     </ul>
 
-    <form class="product-form" data-product-form>
+    <form class="product-form" action="/cart/add" method="post" enctype="multipart/form-data" data-product-form>
       <input type="hidden" name="id" data-variant-id value="{% if selected_variant != blank %}{{ selected_variant.id }}{% endif %}">
       <input type="hidden" name="quantity" data-product-quantity value="1">
 
