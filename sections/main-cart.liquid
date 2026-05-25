@@ -1,0 +1,27 @@
+<div style="max-width:900px;margin:40px auto;padding:20px;">
+  <h1>Your Cart</h1>
+
+  {% if cart.item_count > 0 %}
+    <form action="/cart" method="post">
+      {% for item in cart.items %}
+        <div style="display:flex;gap:20px;border-bottom:1px solid #ddd;padding:20px 0;">
+          <img src="{{ item.image | image_url: width: 120 }}" width="120">
+          <div>
+            <h3>{{ item.product.title }}</h3>
+            <p>{{ item.variant.title }}</p>
+            <p>{{ item.final_line_price | money }}</p>
+            <input type="number" name="updates[]" value="{{ item.quantity }}" min="0">
+          </div>
+        </div>
+      {% endfor %}
+
+      <h2>Total: {{ cart.total_price | money }}</h2>
+
+      <button type="submit" name="update">Update cart</button>
+      <button type="submit" name="checkout">Checkout</button>
+    </form>
+  {% else %}
+    <p>Your cart is empty.</p>
+    <a href="/collections/all">Continue shopping</a>
+  {% endif %}
+</div>
