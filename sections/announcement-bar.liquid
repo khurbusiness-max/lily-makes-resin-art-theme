@@ -1,0 +1,43 @@
+{%- if section.settings.enabled -%}
+  <section class="announcement-bar" aria-label="Store announcements">
+    <div class="announcement-bar__track">
+      {%- for i in (1..4) -%}
+        <span>{{ section.settings.message_1 }}</span>
+        <span>{{ section.settings.message_2 }}</span>
+        <span>{{ section.settings.message_3 }}</span>
+      {%- endfor -%}
+    </div>
+  </section>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Announcement bar",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "enabled",
+      "label": "Show announcement bar",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "message_1",
+      "label": "Message 1",
+      "default": "INDIVIDUALLY HANDCRAFTED"
+    },
+    {
+      "type": "text",
+      "id": "message_2",
+      "label": "Message 2",
+      "default": "WELCOME!"
+    },
+    {
+      "type": "text",
+      "id": "message_3",
+      "label": "Message 3",
+      "default": "FREE WORLDWIDE SHIPPING!"
+    }
+  ]
+}
+{% endschema %}

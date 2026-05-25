@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 540" role="img" aria-labelledby="title">
+  <title id="title">Customer desk placeholder</title>
+  <rect width="720" height="540" fill="#e8edf2"/>
+  <rect y="336" width="720" height="204" fill="#9b683a"/>
+  <rect x="64" y="88" width="240" height="188" rx="18" fill="#ded8d4"/>
+  <rect x="122" y="116" width="300" height="180" rx="14" fill="#c79760"/>
+  <rect x="298" y="178" width="128" height="204" rx="12" fill="#38bdf8" opacity=".75"/>
+  <rect x="284" y="160" width="156" height="238" rx="14" fill="none" stroke="#6b3a1d" stroke-width="16"/>
+  <path d="M315 178c36 28 72 26 104 0v62c-42-10-67 8-94 27z" fill="#6b3a1d"/>
+  <circle cx="176" cy="364" r="42" fill="#fff"/>
+  <path d="M472 360h126v28H472zM438 410h196v22H438z" fill="#d6dde4"/>
+</svg>

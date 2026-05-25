@@ -1,0 +1,104 @@
+<section class="testimonials page-width">
+  <h2>{{ section.settings.heading }}</h2>
+  <div class="testimonial-grid">
+    {%- for block in section.blocks -%}
+      <article class="testimonial-card" {{ block.shopify_attributes }}>
+        <div class="testimonial-card__image">
+          {%- if block.settings.image != blank -%}
+            <img src="{{ block.settings.image | image_url: width: 720 }}" alt="{{ block.settings.image_alt | escape }}" width="720" height="540" loading="lazy">
+          {%- else -%}
+            <img src="{{ 'lmra-testimonial-' | append: forloop.index | append: '.svg' | asset_url }}" alt="{{ block.settings.image_alt | escape }}" width="720" height="540" loading="lazy">
+          {%- endif -%}
+          <span aria-hidden="true">"</span>
+        </div>
+        <div class="testimonial-card__body">
+          <div class="stars" aria-label="5 out of 5 stars">★★★★★</div>
+          <h3>{{ block.settings.title }}</h3>
+          <p>{{ block.settings.quote }}</p>
+          <strong>{{ block.settings.author }}</strong>
+        </div>
+      </article>
+    {%- endfor -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Testimonials",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Testimonials"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "testimonial",
+      "name": "Testimonial",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image"
+        },
+        {
+          "type": "text",
+          "id": "image_alt",
+          "label": "Image alt text",
+          "default": "Customer resin lamp photo"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title",
+          "default": "Perfect gift"
+        },
+        {
+          "type": "textarea",
+          "id": "quote",
+          "label": "Quote",
+          "default": "Got this as a gift and it instantly became the coziest piece on the desk. The blue glow and handmade resin details make it feel personal and premium."
+        },
+        {
+          "type": "text",
+          "id": "author",
+          "label": "Author",
+          "default": "Emily K."
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Testimonials",
+      "blocks": [
+        {
+          "type": "testimonial",
+          "settings": {
+            "title": "Perfect gift",
+            "author": "Emily K."
+          }
+        },
+        {
+          "type": "testimonial",
+          "settings": {
+            "title": "A real centerpiece",
+            "quote": "I bought it for my son and he lit up the second he saw it. The blue glow looks incredible at night and feels much more special than a normal lamp.",
+            "author": "Jason M."
+          }
+        },
+        {
+          "type": "testimonial",
+          "settings": {
+            "title": "Really surprised me",
+            "quote": "It looks way cooler in person than expected. The glow gives the whole room a different feel, and everyone asks where it came from.",
+            "author": "Marcus D."
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

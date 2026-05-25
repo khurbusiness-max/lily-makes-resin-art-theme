@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 1200" role="img" aria-labelledby="title desc">
+  <title id="title">Monster Resin Glow Lamp placeholder</title>
+  <desc id="desc">Original placeholder image for a handmade resin glow lamp.</desc>
+  <defs>
+    <radialGradient id="glow" cx="50%" cy="42%" r="32%">
+      <stop offset="0" stop-color="#dff8ff"/>
+      <stop offset=".28" stop-color="#38bdf8"/>
+      <stop offset=".72" stop-color="#0f3d74"/>
+      <stop offset="1" stop-color="#050609"/>
+    </radialGradient>
+    <linearGradient id="wood" x1="0" x2="1">
+      <stop offset="0" stop-color="#7c3f19"/>
+      <stop offset=".5" stop-color="#d5924d"/>
+      <stop offset="1" stop-color="#4b2413"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="1200" fill="#050609"/>
+  <rect y="820" width="1200" height="380" fill="url(#wood)"/>
+  <path d="M0 870c190-70 338-34 532-22 248 16 397-83 668 18v334H0z" fill="#3a1c10" opacity=".52"/>
+  <g transform="translate(372 145)">
+    <rect x="0" y="0" width="456" height="760" rx="28" fill="#15161a"/>
+    <rect x="18" y="18" width="420" height="724" rx="20" fill="url(#glow)" opacity=".96"/>
+    <path d="M40 34c95 58 210 42 382 8v150c-98-18-178-8-241 30-61 37-112 35-141-9z" fill="#925321" opacity=".82"/>
+    <path d="M219 176c43 58 74 111 68 166-8 75-68 105-83 178-18-94-91-132-86-217 3-53 42-91 101-127z" fill="#c8f7ff"/>
+    <path d="M202 222c34 45 55 80 48 119-8 47-42 75-50 122-14-60-56-92-52-145 3-36 23-67 54-96z" fill="#38bdf8"/>
+    <path d="M95 650c72-76 137-101 196-74 40 18 82 15 125-9l22 175H37z" fill="#122946"/>
+    <path d="M204 545c-16 24-33 58-30 96 4 41 36 63 68 43 34-21 42-72 19-112-12-20-28-29-57-27z" fill="#111827"/>
+    <path d="M174 612c-55 18-83 44-106 86m181-88c58 13 93 39 121 82" fill="none" stroke="#09111f" stroke-width="16" stroke-linecap="round"/>
+    <path d="M52 45v685M420 62v650" stroke="#ffffff" stroke-width="8" opacity=".18"/>
+    <path d="M83 720c80 44 245 48 328 0" fill="none" stroke="#38bdf8" stroke-width="18" opacity=".55"/>
+  </g>
+</svg>

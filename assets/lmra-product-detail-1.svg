@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 1200" role="img" aria-labelledby="title">
+  <title id="title">Blue resin glow detail placeholder</title>
+  <defs>
+    <radialGradient id="a" cx="52%" cy="32%" r="48%">
+      <stop offset="0" stop-color="#e8fbff"/>
+      <stop offset=".25" stop-color="#38bdf8"/>
+      <stop offset=".7" stop-color="#132f66"/>
+      <stop offset="1" stop-color="#050609"/>
+    </radialGradient>
+  </defs>
+  <rect width="1200" height="1200" fill="#050609"/>
+  <rect x="154" y="118" width="892" height="890" rx="30" fill="url(#a)"/>
+  <path d="M186 148c210 90 390 72 828-12v240c-170-38-318-8-456 92-132 95-244 86-372-24z" fill="#8a501f" opacity=".9"/>
+  <path d="M584 306c92 119 122 226 72 330-46 96-96 154-110 262-42-140-150-222-116-370 24-104 82-172 154-222z" fill="#dff8ff"/>
+  <path d="M580 400c56 76 70 147 32 218-24 46-48 84-56 142-30-84-84-148-62-238 14-58 46-95 86-122z" fill="#38bdf8"/>
+  <path d="M240 938c170-156 330-194 480-112 102 56 202 48 286 8v174H198z" fill="#111827"/>
+  <path d="M292 972c204 68 456 74 662 0" fill="none" stroke="#38bdf8" stroke-width="24" opacity=".45"/>
+</svg>

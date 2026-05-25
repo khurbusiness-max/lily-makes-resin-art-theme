@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 1200" role="img" aria-labelledby="title">
+  <title id="title">Handmade resin scene placeholder</title>
+  <rect width="1200" height="1200" fill="#07080d"/>
+  <rect x="210" y="126" width="780" height="900" rx="30" fill="#0f1e3a"/>
+  <rect x="248" y="164" width="704" height="824" rx="22" fill="#38bdf8" opacity=".22"/>
+  <path d="M248 176c132 54 274 70 426 14 92-34 184-42 278-26v244c-158-22-286 10-384 96-118 104-228 74-320-48z" fill="#7a431c"/>
+  <path d="M614 282c74 96 92 184 54 264-34 72-80 116-88 206-36-114-116-182-88-300 18-76 62-128 122-170z" fill="#dff8ff"/>
+  <path d="M612 388c38 50 46 98 20 146-18 34-34 62-38 102-20-54-58-100-42-160 10-38 30-66 60-88z" fill="#38bdf8"/>
+  <path d="M480 742c-42 64-48 158 34 184 84 28 162-72 130-164-22-62-76-78-164-20z" fill="#111827"/>
+  <path d="M482 830c-106 24-188 84-246 178m416-172c120 24 202 82 266 172" fill="none" stroke="#07080d" stroke-width="30" stroke-linecap="round"/>
+</svg>

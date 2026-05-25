@@ -1,0 +1,84 @@
+<footer class="site-footer">
+  <div class="site-footer__top page-width">
+    <div class="site-footer__brand">
+      {%- if section.settings.footer_image != blank -%}
+        <img src="{{ section.settings.footer_image | image_url: width: 320 }}" alt="{{ section.settings.footer_image_alt | escape }}" width="320" height="320" loading="lazy">
+      {%- else -%}
+        <img src="{{ 'lmra-footer-mark.svg' | asset_url }}" alt="{{ section.settings.footer_image_alt | escape }}" width="320" height="320" loading="lazy">
+      {%- endif -%}
+    </div>
+    <nav class="site-footer__links" aria-label="Footer links">
+      <h2>{{ section.settings.links_heading }}</h2>
+      <a href="{{ routes.search_url }}">Search</a>
+      <a href="{{ routes.collections_url }}/all">Catalog</a>
+      <a href="/pages/contact">Contact</a>
+    </nav>
+    <div class="site-footer__newsletter">
+      <h2>{{ section.settings.newsletter_heading }}</h2>
+      <p>{{ section.settings.newsletter_text }}</p>
+      {%- form 'customer', class: 'newsletter-form' -%}
+        <input type="hidden" name="contact[tags]" value="newsletter">
+        <label class="visually-hidden" for="NewsletterEmail-{{ section.id }}">Email</label>
+        <input id="NewsletterEmail-{{ section.id }}" type="email" name="contact[email]" placeholder="Email" autocorrect="off" autocapitalize="off" autocomplete="email" required>
+        <button class="button button--light" type="submit">{{ section.settings.newsletter_button }}</button>
+      {%- endform -%}
+    </div>
+  </div>
+  <div class="site-footer__bottom page-width">
+    <div class="payment-icons" aria-label="Accepted payment methods">
+      {%- for type in shop.enabled_payment_types -%}
+        {{ type | payment_type_svg_tag: class: 'payment-icons__icon' }}
+      {%- endfor -%}
+    </div>
+    <small>&copy; {{ 'now' | date: '%Y' }}, {{ section.settings.copyright_name }}</small>
+  </div>
+</footer>
+
+{% schema %}
+{
+  "name": "Footer",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "footer_image",
+      "label": "Footer image"
+    },
+    {
+      "type": "text",
+      "id": "footer_image_alt",
+      "label": "Footer image alt text",
+      "default": "Lily Makes Resin Art mark"
+    },
+    {
+      "type": "text",
+      "id": "links_heading",
+      "label": "Links heading",
+      "default": "Quick links"
+    },
+    {
+      "type": "text",
+      "id": "newsletter_heading",
+      "label": "Newsletter heading",
+      "default": "Subscribe to our emails"
+    },
+    {
+      "type": "textarea",
+      "id": "newsletter_text",
+      "label": "Newsletter text",
+      "default": "Subscribe to our newsletter for special offers and discounts."
+    },
+    {
+      "type": "text",
+      "id": "newsletter_button",
+      "label": "Newsletter button",
+      "default": "Sign up"
+    },
+    {
+      "type": "text",
+      "id": "copyright_name",
+      "label": "Copyright name",
+      "default": "Lily Makes Resin Art"
+    }
+  ]
+}
+{% endschema %}

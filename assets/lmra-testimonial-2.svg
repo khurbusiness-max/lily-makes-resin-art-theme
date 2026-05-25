@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 540" role="img" aria-labelledby="title">
+  <title id="title">Unboxing placeholder</title>
+  <rect width="720" height="540" fill="#d9e4ec"/>
+  <rect x="118" y="96" width="484" height="300" rx="20" fill="#b88755"/>
+  <path d="M118 150 60 86h182l56 64zm484 0 58-64H478l-56 64z" fill="#d1a06f"/>
+  <rect x="288" y="190" width="142" height="206" rx="12" fill="#a7edff"/>
+  <path d="M304 204c34 24 70 24 110 0v58c-47-8-79 12-102 30z" fill="#7b461d"/>
+  <path d="M352 268c34 48 30 88 2 126-18-42-50-70-28-112 6-12 14-18 26-14z" fill="#38bdf8"/>
+  <path d="M0 410c120-56 192-43 308 0s232 34 412-24v154H0z" fill="#334155"/>
+</svg>

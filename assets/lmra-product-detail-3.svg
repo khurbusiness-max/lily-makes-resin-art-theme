@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 1200" role="img" aria-labelledby="title">
+  <title id="title">Desk glow lamp placeholder</title>
+  <defs>
+    <radialGradient id="b" cx="48%" cy="44%" r="44%">
+      <stop offset="0" stop-color="#f2fdff"/>
+      <stop offset=".28" stop-color="#38bdf8"/>
+      <stop offset=".76" stop-color="#172554"/>
+      <stop offset="1" stop-color="#111827"/>
+    </radialGradient>
+  </defs>
+  <rect width="1200" height="1200" fill="#f6f7fb"/>
+  <rect y="780" width="1200" height="420" fill="#8b5a34"/>
+  <rect x="100" y="96" width="340" height="620" fill="#ffffff"/>
+  <rect x="136" y="132" width="270" height="520" fill="#dff7fb"/>
+  <rect x="604" y="318" width="330" height="470" rx="24" fill="url(#b)"/>
+  <path d="M628 340c74 50 156 48 282-6v142c-100-22-174 4-252 68z" fill="#87501f"/>
+  <path d="M764 470c56 78 66 146 28 214-24 42-44 78-50 136-30-84-86-140-64-230 12-50 44-90 86-120z" fill="#dff8ff"/>
+  <path d="M716 704c-42 62-44 126 22 146 66 20 122-54 92-128-20-46-60-54-114-18z" fill="#111827"/>
+  <circle cx="260" cy="852" r="62" fill="#eaf2f5"/>
+  <rect x="128" y="872" width="240" height="48" rx="10" fill="#263247"/>
+</svg>

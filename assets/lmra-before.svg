@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 700 700" role="img" aria-labelledby="title">
+  <title id="title">Daytime resin lamp placeholder</title>
+  <rect width="700" height="700" fill="#f4f8fb"/>
+  <rect x="0" y="0" width="220" height="700" fill="#e5f4f8"/>
+  <rect x="64" y="0" width="128" height="520" fill="#ffffff"/>
+  <rect x="0" y="520" width="700" height="180" fill="#b9824e"/>
+  <rect x="344" y="250" width="170" height="310" rx="18" fill="#9b5f2c"/>
+  <rect x="360" y="270" width="138" height="270" rx="12" fill="#9be7fb" opacity=".45"/>
+  <path d="M374 286c30 38 69 36 112 12v70c-46-7-78 4-104 35z" fill="#81501f"/>
+  <path d="M424 360c26 35 38 70 24 105-13 32-29 46-34 76-18-53-48-77-43-121 4-27 22-47 53-60z" fill="#38bdf8" opacity=".55"/>
+  <circle cx="154" cy="580" r="46" fill="#ffffff"/>
+  <rect x="110" y="568" width="92" height="64" rx="8" fill="#d2e2e6"/>
+</svg>

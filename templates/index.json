@@ -1,0 +1,145 @@
+{
+  "sections": {
+    "product_hero": {
+      "type": "product-hero",
+      "blocks": {
+        "gallery_1": {
+          "type": "gallery_image",
+          "settings": {
+            "alt": "Monster resin glow lamp front view"
+          }
+        },
+        "gallery_2": {
+          "type": "gallery_image",
+          "settings": {
+            "alt": "Monster resin glow lamp blue resin detail"
+          }
+        },
+        "gallery_3": {
+          "type": "gallery_image",
+          "settings": {
+            "alt": "Monster resin glow lamp handmade scene"
+          }
+        },
+        "gallery_4": {
+          "type": "gallery_image",
+          "settings": {
+            "alt": "Monster resin glow lamp on desk"
+          }
+        },
+        "bullet_1": {
+          "type": "bullet",
+          "settings": {
+            "icon": "!",
+            "text": "Handmade resin display piece"
+          }
+        },
+        "bullet_2": {
+          "type": "bullet",
+          "settings": {
+            "icon": "+",
+            "text": "Glows like a cozy movie scene"
+          }
+        },
+        "bullet_3": {
+          "type": "bullet",
+          "settings": {
+            "icon": "#",
+            "text": "A gift collectors will remember"
+          }
+        }
+      },
+      "block_order": [
+        "gallery_1",
+        "gallery_2",
+        "gallery_3",
+        "gallery_4",
+        "bullet_1",
+        "bullet_2",
+        "bullet_3"
+      ]
+    },
+    "testimonials": {
+      "type": "testimonials",
+      "blocks": {
+        "testimonial_1": {
+          "type": "testimonial",
+          "settings": {
+            "title": "Perfect gift",
+            "quote": "Got this as a gift and it instantly became the coziest piece on the desk. The blue glow and handmade resin details make it feel personal and premium.",
+            "author": "Emily K."
+          }
+        },
+        "testimonial_2": {
+          "type": "testimonial",
+          "settings": {
+            "title": "A real centerpiece",
+            "quote": "I bought it for my son and he lit up the second he saw it. The blue glow looks incredible at night and feels much more special than a normal lamp.",
+            "author": "Jason M."
+          }
+        },
+        "testimonial_3": {
+          "type": "testimonial",
+          "settings": {
+            "title": "Really surprised me",
+            "quote": "It looks way cooler in person than expected. The glow gives the whole room a different feel, and everyone asks where it came from.",
+            "author": "Marcus D."
+          }
+        }
+      },
+      "block_order": [
+        "testimonial_1",
+        "testimonial_2",
+        "testimonial_3"
+      ]
+    },
+    "before_after": {
+      "type": "before-after"
+    },
+    "faq": {
+      "type": "faq",
+      "blocks": {
+        "faq_1": {
+          "type": "faq",
+          "settings": {
+            "question": "How are the lamps made?",
+            "answer": "<p>Each lamp is individually hand-poured with resin, layered decorative details, and a built-in light source. Small variations are expected and make every piece unique.</p>"
+          }
+        },
+        "faq_2": {
+          "type": "faq",
+          "settings": {
+            "question": "Do the lamps produce an animated effect like the videos?",
+            "answer": "<p>The lamp creates a bright blue glow and layered scene depth. Video lighting and camera exposure can make the glow appear more dramatic, so real-life brightness may vary by room.</p>"
+          }
+        },
+        "faq_3": {
+          "type": "faq",
+          "settings": {
+            "question": "Does it come with a power cord and light?",
+            "answer": "<p>Yes. The lamp includes the installed light component and a compatible power cord unless your product listing states otherwise.</p>"
+          }
+        },
+        "faq_4": {
+          "type": "faq",
+          "settings": {
+            "question": "Returns & guarantees",
+            "answer": "<p>If your lamp arrives damaged, contact us with photos within 7 days of delivery. We will help with a replacement or return based on store policy.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "faq_1",
+        "faq_2",
+        "faq_3",
+        "faq_4"
+      ]
+    }
+  },
+  "order": [
+    "product_hero",
+    "testimonials",
+    "before_after",
+    "faq"
+  ]
+}

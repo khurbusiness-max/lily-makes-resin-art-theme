@@ -1,0 +1,40 @@
+<header class="site-header" data-section-id="{{ section.id }}">
+  <div class="site-header__inner page-width">
+    <nav class="site-header__nav" aria-label="Primary navigation">
+      <a class="site-header__link{% if request.page_type == 'index' %} is-active{% endif %}" href="{{ routes.root_url }}">Home</a>
+      <a class="site-header__link{% if request.page_type == 'collection' %} is-active{% endif %}" href="{{ routes.collections_url }}/all">Catalog</a>
+      <a class="site-header__link{% if page.handle == 'contact' %} is-active{% endif %}" href="/pages/contact">Contact</a>
+    </nav>
+
+    <a class="site-header__logo" href="{{ routes.root_url }}" aria-label="{{ section.settings.logo_text | escape }}">
+      {{ section.settings.logo_text }}
+    </a>
+
+    <div class="site-header__icons">
+      <a class="icon-button" href="{{ routes.search_url }}" aria-label="Search">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m21 21-4.35-4.35m2.35-5.15a7.5 7.5 0 1 1-15 0 7.5 7.5 0 0 1 15 0Z"/></svg>
+      </a>
+      <a class="icon-button" href="{{ routes.account_url }}" aria-label="Account">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 21a8 8 0 0 0-16 0m12-13a4 4 0 1 1-8 0 4 4 0 0 1 8 0Z"/></svg>
+      </a>
+      <button class="icon-button cart-trigger" type="button" aria-label="Open cart" aria-controls="CartDrawer" data-cart-open>
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6h15l-2 9H8L6 3H3m6 17a1 1 0 1 0 0 .01M18 20a1 1 0 1 0 0 .01"/></svg>
+        <span class="cart-count" data-cart-count>{{ cart.item_count }}</span>
+      </button>
+    </div>
+  </div>
+</header>
+
+{% schema %}
+{
+  "name": "Header",
+  "settings": [
+    {
+      "type": "text",
+      "id": "logo_text",
+      "label": "Logo text",
+      "default": "Lily Makes Resin Art"
+    }
+  ]
+}
+{% endschema %}

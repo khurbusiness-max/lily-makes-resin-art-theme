@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 700 700" role="img" aria-labelledby="title">
+  <title id="title">Night resin lamp placeholder</title>
+  <defs>
+    <radialGradient id="g" cx="48%" cy="45%" r="45%">
+      <stop offset="0" stop-color="#dff8ff"/>
+      <stop offset=".28" stop-color="#38bdf8"/>
+      <stop offset=".74" stop-color="#102c5f"/>
+      <stop offset="1" stop-color="#0b0c12"/>
+    </radialGradient>
+  </defs>
+  <rect width="700" height="700" fill="#121017"/>
+  <rect x="0" y="500" width="700" height="200" fill="#6d4024"/>
+  <rect x="356" y="140" width="190" height="380" rx="20" fill="url(#g)"/>
+  <path d="M372 154c42 38 100 46 158 8v92c-76-10-109 18-150 48z" fill="#8b5121" opacity=".85"/>
+  <path d="M450 250c46 64 47 119 6 175-18 25-24 50-26 88-24-70-78-104-60-176 9-35 36-61 80-87z" fill="#cff8ff"/>
+  <path d="M432 310c24 38 25 76 4 110-12 20-20 39-22 61-16-43-47-75-33-118 8-23 25-39 51-53z" fill="#38bdf8"/>
+  <path d="M250 572c92-120 188-137 310-52v85H236z" fill="#0d1727"/>
+  <circle cx="188" cy="548" r="54" fill="#c9d9dc" opacity=".18"/>
+  <rect x="86" y="542" width="148" height="46" rx="8" fill="#12151f"/>
+</svg>

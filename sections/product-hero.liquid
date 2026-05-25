@@ -1,0 +1,418 @@
+{%- liquid
+  assign featured_product = product
+  if featured_product == blank
+    assign featured_product = section.settings.featured_product
+  endif
+
+  assign selected_variant = blank
+  if featured_product != blank
+    assign selected_variant = featured_product.selected_or_first_available_variant
+  endif
+
+  assign product_title = section.settings.product_title
+  assign price_text = section.settings.price_text
+  assign compare_text = section.settings.compare_text
+  if featured_product != blank
+    assign product_title = featured_product.title
+    assign price_text = selected_variant.price | money
+    if selected_variant.compare_at_price > selected_variant.price
+      assign compare_text = selected_variant.compare_at_price | money
+    endif
+  endif
+
+  assign now_ts = 'now' | date: '%s' | plus: 0
+  assign prep_ts = now_ts | plus: 604800
+  assign deliver_ts = now_ts | plus: 1555200
+-%}
+
+<section class="product-hero page-width" data-product-section data-section-id="{{ section.id }}">
+  <div class="product-hero__media">
+    <div class="product-gallery">
+      <div class="product-gallery__main">
+        {%- assign first_image_rendered = false -%}
+        {%- for block in section.blocks -%}
+          {%- if block.type == 'gallery_image' and first_image_rendered == false -%}
+            {%- assign first_image_rendered = true -%}
+            {%- if block.settings.image != blank -%}
+              <img src="{{ block.settings.image | image_url: width: 1200 }}" alt="{{ block.settings.alt | escape }}" width="1200" height="1200" data-gallery-main>
+            {%- else -%}
+              <img src="{{ 'lmra-product-main.svg' | asset_url }}" alt="{{ block.settings.alt | default: product_title | escape }}" width="1200" height="1200" data-gallery-main>
+            {%- endif -%}
+          {%- endif -%}
+        {%- endfor -%}
+        {%- if first_image_rendered == false -%}
+          <img src="{{ 'lmra-product-main.svg' | asset_url }}" alt="{{ product_title | escape }}" width="1200" height="1200" data-gallery-main>
+        {%- endif -%}
+      </div>
+
+      <div class="product-gallery__thumbs" aria-label="Product images">
+        {%- assign thumb_count = 0 -%}
+        {%- for block in section.blocks -%}
+          {%- if block.type == 'gallery_image' -%}
+            {%- assign thumb_count = thumb_count | plus: 1 -%}
+            {%- if block.settings.image != blank -%}
+              {%- assign thumb_url = block.settings.image | image_url: width: 300 -%}
+              {%- assign full_url = block.settings.image | image_url: width: 1200 -%}
+            {%- else -%}
+              {%- assign fallback_asset = 'lmra-product-main.svg' -%}
+              {%- case thumb_count -%}
+                {%- when 2 -%}
+                  {%- assign fallback_asset = 'lmra-product-detail-1.svg' -%}
+                {%- when 3 -%}
+                  {%- assign fallback_asset = 'lmra-product-detail-2.svg' -%}
+                {%- when 4 -%}
+                  {%- assign fallback_asset = 'lmra-product-detail-3.svg' -%}
+              {%- endcase -%}
+              {%- assign thumb_url = fallback_asset | asset_url -%}
+              {%- assign full_url = fallback_asset | asset_url -%}
+            {%- endif -%}
+            <button class="product-gallery__thumb{% if thumb_count == 1 %} is-active{% endif %}" type="button" data-gallery-thumb data-full="{{ full_url }}" aria-label="Show product image {{ thumb_count }}" {{ block.shopify_attributes }}>
+              <img src="{{ thumb_url }}" alt="{{ block.settings.alt | escape }}" width="180" height="180">
+            </button>
+          {%- endif -%}
+        {%- endfor -%}
+      </div>
+    </div>
+  </div>
+
+  <div class="product-hero__info">
+    <p class="stock-badge">{{ section.settings.stock_badge }}</p>
+    <h1>{{ product_title }}</h1>
+
+    <div class="social-proof" aria-label="{{ section.settings.orders_text | escape }}">
+      <div class="social-proof__avatars" aria-hidden="true">
+        <span></span><span></span><span></span><span></span><span></span>
+      </div>
+      <strong>{{ section.settings.orders_text }}</strong>
+    </div>
+
+    <div class="review-line" aria-label="{{ section.settings.review_text | escape }}">
+      <span class="stars" aria-hidden="true">★★★★★</span>
+      <span>{{ section.settings.review_text }}</span>
+    </div>
+
+    <div class="price-line">
+      <span class="price">{{ price_text }}</span>
+      <s>{{ compare_text }}</s>
+      <span class="save-badge">{{ section.settings.save_badge }}</span>
+    </div>
+
+    <ul class="product-bullets">
+      {%- for block in section.blocks -%}
+        {%- if block.type == 'bullet' -%}
+          <li {{ block.shopify_attributes }}><span aria-hidden="true">{{ block.settings.icon }}</span>{{ block.settings.text }}</li>
+        {%- endif -%}
+      {%- endfor -%}
+    </ul>
+
+    <form class="product-form" data-product-form>
+      <input type="hidden" name="id" data-variant-id value="{% if selected_variant != blank %}{{ selected_variant.id }}{% endif %}">
+      <input type="hidden" name="quantity" data-product-quantity value="1">
+
+      {% comment %}
+        Connect this section to the real Shopify product by selecting "Featured product"
+        in the theme customizer or by assigning this template to the product page.
+        Product images can be replaced with image picker blocks below.
+      {% endcomment %}
+      {%- if featured_product != blank -%}
+        <script type="application/json" data-product-json>{{ featured_product | json }}</script>
+      {%- endif -%}
+
+      <fieldset class="option-fieldset" data-option-group>
+        <legend>{{ section.settings.variant_label }}</legend>
+        <button class="option-pill is-active" type="button" data-option-index="0" data-option-value="{{ section.settings.size_small | escape }}" aria-pressed="true">{{ section.settings.size_small }}</button>
+        <button class="option-pill" type="button" data-option-index="0" data-option-value="{{ section.settings.size_large | escape }}" aria-pressed="false">{{ section.settings.size_large }}</button>
+      </fieldset>
+
+      <div class="bundle-heading" aria-hidden="true"><span></span>{{ section.settings.bundle_heading }}<span></span></div>
+      <fieldset class="bundle-options" data-bundle-group>
+        <legend class="visually-hidden">{{ section.settings.bundle_heading }}</legend>
+        <label class="bundle-card is-active">
+          <input type="radio" name="bundle" value="1" checked data-bundle-quantity="1" data-bundle-label="{{ section.settings.bundle_1_label | escape }}">
+          <span>
+            <strong>{{ section.settings.bundle_1_label }}</strong>
+          </span>
+          <span class="bundle-card__price">
+            <strong>{{ section.settings.bundle_1_price }}</strong>
+            <s>{{ section.settings.bundle_1_compare }}</s>
+          </span>
+        </label>
+        <label class="bundle-card">
+          <input type="radio" name="bundle" value="2" data-bundle-quantity="2" data-bundle-label="{{ section.settings.bundle_2_label | escape }}">
+          <span>
+            <strong>{{ section.settings.bundle_2_label }}</strong>
+            <em>{{ section.settings.bundle_2_badge }}</em>
+          </span>
+          <span class="bundle-card__price">
+            <strong>{{ section.settings.bundle_2_price }}</strong>
+            <s>{{ section.settings.bundle_2_compare }}</s>
+          </span>
+        </label>
+      </fieldset>
+
+      <button class="button button--primary product-form__submit" type="submit" data-add-to-cart>
+        {{ section.settings.add_to_cart_text }}
+      </button>
+      <p class="form-message" role="status" data-form-message></p>
+    </form>
+
+    <div class="payment-icons" aria-label="Accepted payment methods">
+      {%- if shop.enabled_payment_types.size > 0 -%}
+        {%- for type in shop.enabled_payment_types -%}
+          {{ type | payment_type_svg_tag: class: 'payment-icons__icon' }}
+        {%- endfor -%}
+      {%- else -%}
+        <span>Amex</span><span>Apple Pay</span><span>Discover</span><span>Google Pay</span><span>Mastercard</span><span>PayPal</span><span>Visa</span>
+      {%- endif -%}
+    </div>
+
+    <div class="shipping-timeline" aria-label="Shipping timeline">
+      <div class="shipping-timeline__line"></div>
+      <div class="shipping-step">
+        <span class="shipping-step__icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6h15l-2 9H8L6 3H3"/></svg></span>
+        <strong>{{ now_ts | date: "%b %-d" }}</strong>
+        <span>{{ section.settings.timeline_ordered }}</span>
+      </div>
+      <div class="shipping-step">
+        <span class="shipping-step__icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 7h11v10H3zM14 10h4l3 3v4h-7z"/></svg></span>
+        <strong>{{ prep_ts | date: "%b %-d" }} - {{ prep_ts | plus: 691200 | date: "%b %-d" }}</strong>
+        <span>{{ section.settings.timeline_prepared }}</span>
+      </div>
+      <div class="shipping-step">
+        <span class="shipping-step__icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 12v10H4V12m16 0H4m16 0-2-6H6l-2 6m8-6v16"/></svg></span>
+        <strong>{{ deliver_ts | date: "%b %-d" }} - {{ deliver_ts | plus: 864000 | date: "%b %-d" }}</strong>
+        <span>{{ section.settings.timeline_delivered }}</span>
+      </div>
+    </div>
+  </div>
+
+  {%- if section.settings.show_sticky_bar -%}
+    <div class="sticky-atc" data-sticky-atc>
+      <div>
+        <strong>{{ product_title }}</strong>
+        <p><span>{{ price_text }}</span> <s>{{ compare_text }}</s> <em>{{ section.settings.save_badge }}</em></p>
+      </div>
+      <button class="button button--primary" type="button" data-sticky-add>{{ section.settings.add_to_cart_text }}</button>
+    </div>
+  {%- endif -%}
+</section>
+
+{% schema %}
+{
+  "name": "Product hero",
+  "settings": [
+    {
+      "type": "product",
+      "id": "featured_product",
+      "label": "Featured product"
+    },
+    {
+      "type": "text",
+      "id": "product_title",
+      "label": "Fallback product title",
+      "default": "Lily's Art | Monster Resin Glow Lamp"
+    },
+    {
+      "type": "text",
+      "id": "stock_badge",
+      "label": "Stock badge",
+      "default": "Hot Product | Low Stock"
+    },
+    {
+      "type": "text",
+      "id": "orders_text",
+      "label": "Recent orders text",
+      "default": "90+ orders in the last 24h"
+    },
+    {
+      "type": "text",
+      "id": "review_text",
+      "label": "Review text",
+      "default": "4.9/5.0 (40+ Verified Reviews)"
+    },
+    {
+      "type": "text",
+      "id": "price_text",
+      "label": "Fallback price",
+      "default": "$89.95"
+    },
+    {
+      "type": "text",
+      "id": "compare_text",
+      "label": "Fallback compare-at price",
+      "default": "$129.95"
+    },
+    {
+      "type": "text",
+      "id": "save_badge",
+      "label": "Discount badge",
+      "default": "SAVE 30%"
+    },
+    {
+      "type": "text",
+      "id": "variant_label",
+      "label": "Variant label",
+      "default": "Sizes"
+    },
+    {
+      "type": "text",
+      "id": "size_small",
+      "label": "Small option label",
+      "default": "Small"
+    },
+    {
+      "type": "text",
+      "id": "size_large",
+      "label": "Large option label",
+      "default": "Large"
+    },
+    {
+      "type": "text",
+      "id": "bundle_heading",
+      "label": "Bundle heading",
+      "default": "BUNDLE & SAVE"
+    },
+    {
+      "type": "text",
+      "id": "bundle_1_label",
+      "label": "Bundle 1 label",
+      "default": "Buy 1"
+    },
+    {
+      "type": "text",
+      "id": "bundle_1_price",
+      "label": "Bundle 1 price",
+      "default": "$89.95"
+    },
+    {
+      "type": "text",
+      "id": "bundle_1_compare",
+      "label": "Bundle 1 compare-at price",
+      "default": "$129.95"
+    },
+    {
+      "type": "text",
+      "id": "bundle_2_label",
+      "label": "Bundle 2 label",
+      "default": "Buy 2"
+    },
+    {
+      "type": "text",
+      "id": "bundle_2_badge",
+      "label": "Bundle 2 badge",
+      "default": "Best Gift Deal"
+    },
+    {
+      "type": "text",
+      "id": "bundle_2_price",
+      "label": "Bundle 2 price",
+      "default": "$161.91"
+    },
+    {
+      "type": "text",
+      "id": "bundle_2_compare",
+      "label": "Bundle 2 compare-at price",
+      "default": "$259.90"
+    },
+    {
+      "type": "text",
+      "id": "add_to_cart_text",
+      "label": "Add to cart button",
+      "default": "ADD TO CART"
+    },
+    {
+      "type": "text",
+      "id": "timeline_ordered",
+      "label": "Timeline ordered label",
+      "default": "Ordered"
+    },
+    {
+      "type": "text",
+      "id": "timeline_prepared",
+      "label": "Timeline prepared label",
+      "default": "Handmade & Prepared"
+    },
+    {
+      "type": "text",
+      "id": "timeline_delivered",
+      "label": "Timeline delivered label",
+      "default": "Delivered"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_sticky_bar",
+      "label": "Show sticky add-to-cart bar",
+      "default": true
+    }
+  ],
+  "blocks": [
+    {
+      "type": "gallery_image",
+      "name": "Gallery image",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image"
+        },
+        {
+          "type": "text",
+          "id": "alt",
+          "label": "Alt text",
+          "default": "Monster resin glow lamp"
+        }
+      ]
+    },
+    {
+      "type": "bullet",
+      "name": "Product bullet",
+      "settings": [
+        {
+          "type": "text",
+          "id": "icon",
+          "label": "Icon",
+          "default": "*"
+        },
+        {
+          "type": "text",
+          "id": "text",
+          "label": "Text",
+          "default": "Hand-poured resin glow display"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Product hero",
+      "blocks": [
+        { "type": "gallery_image" },
+        { "type": "gallery_image" },
+        { "type": "gallery_image" },
+        { "type": "gallery_image" },
+        {
+          "type": "bullet",
+          "settings": {
+            "icon": "!",
+            "text": "Handmade resin display piece"
+          }
+        },
+        {
+          "type": "bullet",
+          "settings": {
+            "icon": "+",
+            "text": "Glows like a cozy movie scene"
+          }
+        },
+        {
+          "type": "bullet",
+          "settings": {
+            "icon": "#",
+            "text": "A gift collectors will remember"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

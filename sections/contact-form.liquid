@@ -1,0 +1,51 @@
+<section class="contact-section page-width">
+  <h1>{{ section.settings.heading }}</h1>
+  {%- form 'contact', class: 'contact-form' -%}
+    {%- if form.posted_successfully? -%}
+      <p class="form-success" role="status">{{ section.settings.success_message }}</p>
+    {%- endif -%}
+    {{ form.errors | default_errors }}
+
+    <div class="contact-form__row">
+      <label class="visually-hidden" for="ContactName">Name</label>
+      <input id="ContactName" type="text" name="contact[name]" placeholder="Name" value="{{ form.name }}">
+
+      <label class="visually-hidden" for="ContactEmail">Email</label>
+      <input id="ContactEmail" type="email" name="contact[email]" placeholder="Email *" value="{{ form.email }}" autocorrect="off" autocapitalize="off" autocomplete="email" required>
+    </div>
+
+    <label class="visually-hidden" for="ContactPhone">Phone number</label>
+    <input id="ContactPhone" type="tel" name="contact[phone]" placeholder="Phone number" value="{{ form.phone }}" pattern="[0-9\-+\s()]*">
+
+    <label class="visually-hidden" for="ContactComment">Comment</label>
+    <textarea id="ContactComment" name="contact[body]" placeholder="Comment" rows="5">{{ form.body }}</textarea>
+
+    <button class="button button--primary" type="submit">{{ section.settings.button_text }}</button>
+  {%- endform -%}
+</section>
+
+{% schema %}
+{
+  "name": "Contact form",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Get in Touch. We're Here to Help!"
+    },
+    {
+      "type": "text",
+      "id": "button_text",
+      "label": "Button text",
+      "default": "Send"
+    },
+    {
+      "type": "text",
+      "id": "success_message",
+      "label": "Success message",
+      "default": "Thanks for reaching out. We will reply as soon as possible."
+    }
+  ]
+}
+{% endschema %}
