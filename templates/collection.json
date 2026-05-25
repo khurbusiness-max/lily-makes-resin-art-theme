@@ -25,7 +25,7 @@
         "fallback_price": "$89.95",
         "fallback_compare": "$129.95",
         "discount_badge": "SAVE 30%",
-        "button_text": "Go to product"
+        "button_text": "Go to product{{ section.settings.fallback_product.metafields.custom.godzilla_lamp.value }}"
       }
     }
   },
