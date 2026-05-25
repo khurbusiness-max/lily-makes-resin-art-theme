@@ -12,6 +12,13 @@
     "product_hero": {
       "type": "product-hero",
       "blocks": {
+        "bullet_rqxgtC": {
+          "type": "bullet",
+          "settings": {
+            "icon": "*",
+            "text": "Hand-poured resin glow display"
+          }
+        },
         "gallery_1": {
           "type": "gallery_image",
           "settings": {
@@ -63,6 +70,7 @@
         }
       },
       "block_order": [
+        "bullet_rqxgtC",
         "gallery_1",
         "gallery_2",
         "gallery_3",
