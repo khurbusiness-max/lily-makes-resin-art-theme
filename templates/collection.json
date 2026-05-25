@@ -11,6 +11,7 @@
   "sections": {
     "main_collection": {
       "type": "main-collection",
+      "custom_css": [],
       "settings": {
         "heading": "Products",
         "fallback_product": "resin-night-light-creative-craft-handmade-decor-for-home-office-desk-holiday-birthday-party-festival-gift-ornament",
