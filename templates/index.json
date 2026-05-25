@@ -104,6 +104,7 @@
         "testimonial_1": {
           "type": "testimonial",
           "settings": {
+            "image": "shopify://shop_images/Review_1.png",
             "image_alt": "Customer resin lamp photo",
             "title": "Perfect gift",
             "quote": "Got this as a gift and it instantly became the coziest piece on the desk. The blue glow and handmade resin details make it feel personal and premium.",
@@ -113,6 +114,7 @@
         "testimonial_2": {
           "type": "testimonial",
           "settings": {
+            "image": "shopify://shop_images/review_2.png",
             "image_alt": "Customer resin lamp photo",
             "title": "A real centerpiece",
             "quote": "I bought it for my son and he lit up the second he saw it. The blue glow looks incredible at night and feels much more special than a normal lamp.",
@@ -122,6 +124,7 @@
         "testimonial_3": {
           "type": "testimonial",
           "settings": {
+            "image": "shopify://shop_images/review_3.png",
             "image_alt": "Customer resin lamp photo",
             "title": "Really surprised me",
             "quote": "It looks way cooler in person than expected. The glow gives the whole room a different feel, and everyone asks where it came from.",
@@ -144,8 +147,10 @@
         "heading": "From Desk Decor to Movie Scene",
         "text": "Slide to see the difference. By day, it is a detailed handmade resin display. At night, the blue glow turns it into a dramatic monster scene for your room.",
         "before_label": "Before",
+        "before_image": "shopify://shop_images/day.png",
         "before_alt": "Resin lamp in daylight",
         "after_label": "After",
+        "after_image": "shopify://shop_images/night.png",
         "after_alt": "Resin lamp glowing at night"
       }
     },

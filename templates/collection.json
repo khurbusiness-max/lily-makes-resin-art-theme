@@ -1,7 +1,26 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "sections": {
     "main_collection": {
-      "type": "main-collection"
+      "type": "main-collection",
+      "settings": {
+        "heading": "Products",
+        "fallback_product": "resin-night-light-creative-craft-handmade-decor-for-home-office-desk-holiday-birthday-party-festival-gift-ornament",
+        "products_to_show": 4,
+        "fallback_title": "Lily's Art | Monster Resin Glow Lamp",
+        "fallback_price": "$89.95",
+        "fallback_compare": "$129.95",
+        "discount_badge": "SAVE 30%",
+        "button_text": "Go to product"
+      }
     }
   },
   "order": [
