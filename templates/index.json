@@ -75,7 +75,7 @@
         ".product-hero img {max-width: 100%; width: auto; height: auto; object-fit: contain;}"
       ],
       "settings": {
-        "featured_product": "",
+        "featured_product": "resin-night-light-creative-craft-handmade-decor-for-home-office-desk-holiday-birthday-party-festival-gift-ornament",
         "product_title": "Lily's Art | Monster Resin Glow Lamp",
         "stock_badge": "Hot Product | Low Stock",
         "orders_text": "90+ orders in the last 24h",
@@ -147,22 +147,6 @@
         "heading": "Testimonials"
       }
     },
-    "before_after": {
-      "type": "before-after",
-      "custom_css": [
-        ".before-after-slider-handle {background-color: white; border: 3px solid white; box-shadow: 0 0 10px rgba(0, 0, 0, 0.5); width: 50px; height: 50px;}"
-      ],
-      "settings": {
-        "heading": "From Desk Decor to Movie Scene",
-        "text": "Slide to see the difference. By day, it is a detailed handmade resin display. At night, the blue glow turns it into a dramatic monster scene for your room.",
-        "before_label": "Before",
-        "before_image": "shopify://shop_images/day.png",
-        "before_alt": "Resin lamp in daylight",
-        "after_label": "After",
-        "after_image": "shopify://shop_images/night.png",
-        "after_alt": "Resin lamp glowing at night"
-      }
-    },
     "faq": {
       "type": "faq",
       "blocks": {
@@ -204,12 +188,26 @@
       "settings": {
         "heading": "FAQ"
       }
+    },
+    "before_after_wGMMdq": {
+      "type": "before-after",
+      "name": "Before and after",
+      "settings": {
+        "heading": "From Desk Decor to Movie Scene",
+        "text": "Slide to see the difference. By day, it is a detailed handmade resin display. At night, the blue glow turns it into a dramatic monster scene for your room.",
+        "before_label": "Before",
+        "before_image": "shopify://shop_images/day.png",
+        "before_alt": "Resin lamp in daylight",
+        "after_label": "After",
+        "after_image": "shopify://shop_images/night.png",
+        "after_alt": "Resin lamp glowing at night"
+      }
     }
   },
   "order": [
     "product_hero",
     "testimonials",
-    "before_after",
-    "faq"
+    "faq",
+    "before_after_wGMMdq"
   ]
 }
