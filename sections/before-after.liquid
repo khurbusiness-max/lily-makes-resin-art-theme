@@ -35,7 +35,7 @@
       value="50"
       step="1"
       aria-label="Move slider to compare morning and night mode"
-      oninput="this.closest('[data-ba-slider]').style.setProperty('--ba-position', this.value + '%')"
+      oninput="this.parentElement.style.setProperty('--ba-position', this.value + '%')"
     >
   </div>
 </section>
