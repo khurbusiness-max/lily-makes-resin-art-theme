@@ -1,57 +1,27 @@
-Your code looks okay, but Shopify’s editor may still be reading old bad text lower in the file or above line 1.
-
-Do this exactly:
-
-1. Click inside `before-after.liquid`
-2. Press `Ctrl + A`
-3. Press `Backspace`
-4. Paste the code below
-5. Save
-
-Use this simpler version. It has no inline JavaScript, so Shopify should not mark it red.
-
-```liquid
 <section class="ba-section page-width" id="BeforeAfter-{{ section.id }}">
   <div class="ba-copy">
     <h2>{{ section.settings.heading }}</h2>
     <p>{{ section.settings.text }}</p>
   </div>
 
-<div class="ba-slider" style="--ba-position: 50%;">
-  <div class="ba-image ba-image--after">
-    <span class="ba-label ba-label--after">{{ section.settings.after_label }}</span>
+  <div class="ba-slider" style="--ba-position: 50%;">
+    <div class="ba-image ba-image--after">
+      <span class="ba-label ba-label--after">{{ section.settings.after_label }}</span>
+      {% if section.settings.after_image != blank %}
+        {{ section.settings.after_image | image_url: width: 1000 | image_tag: loading: 'lazy', alt: section.settings.after_alt }}
+      {% else %}
+        {{ 'image' | placeholder_svg_tag: 'ba-placeholder' }}
+      {% endif %}
+    </div>
 
-    {% if section.settings.after_image %}
-      {{ section.settings.after_image | image_url: width: 1000 | image_tag: loading: 'lazy', alt: section.settings.after_alt }}
-    {% else %}
-      <img src="{{ 'lmra-after.svg' | asset_url }}" alt="{{ section.settings.after_alt | escape }}" loading="lazy">
-    {% endif %}
-  </div>
-
-  <div class="ba-image ba-image--before">
-    <span class="ba-label ba-label--before">{{ section.settings.before_label }}</span>
-
-    {% if section.settings.before_image %}
-      {{ section.settings.before_image | image_url: width: 1000 | image_tag: loading: 'lazy', alt: section.settings.before_alt }}
-    {% else %}
-      <img src="{{ 'lmra-before.svg' | asset_url }}" alt="{{ section.settings.before_alt | escape }}" loading="lazy">
-    {% endif %}
-  </div>
-
-  <div class="ba-handle" aria-hidden="true">
-    <span></span>
-  </div>
-
-  <input
-    class="ba-range"
-    type="range"
-    min="0"
-    max="100"
-    value="50"
-    step="1"
-    aria-label="Move slider to compare morning and night mode"
-  >
-</div>
+    <div class="ba-image ba-image--before">
+      <span class="ba-label ba-label--before">{{ section.settings.before_label }}</span>
+      {% if section.settings.before_image != blank %}
+        {{ section.settings.before_image | image_url: width: 1000 | image_tag: loading: 'lazy', alt: section.settings.before_alt }}
+      {% else %}
+        {{ 'image' | placeholder_svg_tag: 'ba-placeholder' }}
+      {% endif %}
+    </div>
 
     <div class="ba-handle" aria-hidden="true">
       <span></span>
@@ -102,7 +72,8 @@ Use this simpler version. It has no inline JavaScript, so Shopify should not mar
     inset: 0;
   }
 
-  #BeforeAfter-{{ section.id }} .ba-image img {
+  #BeforeAfter-{{ section.id }} .ba-image img,
+  #BeforeAfter-{{ section.id }} .ba-image svg {
     display: block;
     width: 100%;
     height: 100%;
@@ -247,4 +218,3 @@ Use this simpler version. It has no inline JavaScript, so Shopify should not mar
   ]
 }
 {% endschema %}
-```
