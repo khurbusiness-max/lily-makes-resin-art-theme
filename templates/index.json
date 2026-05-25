@@ -140,12 +140,18 @@
         "testimonial_2",
         "testimonial_3"
       ],
+      "custom_css": [
+        ".product-hero img {max-width: 100%; width: auto; height: auto; object-fit: contain;}"
+      ],
       "settings": {
         "heading": "Testimonials"
       }
     },
     "before_after": {
       "type": "before-after",
+      "custom_css": [
+        ".before-after-slider-handle {background-color: white; border: 3px solid white; box-shadow: 0 0 10px rgba(0, 0, 0, 0.5); width: 50px; height: 50px;}"
+      ],
       "settings": {
         "heading": "From Desk Decor to Movie Scene",
         "text": "Slide to see the difference. By day, it is a detailed handmade resin display. At night, the blue glow turns it into a dramatic monster scene for your room.",
