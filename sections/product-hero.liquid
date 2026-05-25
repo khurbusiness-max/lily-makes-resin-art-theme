@@ -12,6 +12,7 @@
   assign product_title = section.settings.product_title
   assign price_text = section.settings.price_text
   assign compare_text = section.settings.compare_text
+
   if featured_product != blank
     assign product_title = featured_product.title
     assign price_text = selected_variant.price | money
@@ -36,12 +37,13 @@
             {%- if block.settings.image != blank -%}
               <img src="{{ block.settings.image | image_url: width: 1200 }}" alt="{{ block.settings.alt | escape }}" width="1200" height="1200" data-gallery-main>
             {%- else -%}
-              <img src="{{ 'lmra-product-main.svg' | asset_url }}" alt="{{ block.settings.alt | default: product_title | escape }}" width="1200" height="1200" data-gallery-main>
+              {{ 'image' | placeholder_svg_tag: 'product-placeholder' }}
             {%- endif -%}
           {%- endif -%}
         {%- endfor -%}
+
         {%- if first_image_rendered == false -%}
-          <img src="{{ 'lmra-product-main.svg' | asset_url }}" alt="{{ product_title | escape }}" width="1200" height="1200" data-gallery-main>
+          {{ 'image' | placeholder_svg_tag: 'product-placeholder' }}
         {%- endif -%}
       </div>
 
@@ -50,25 +52,14 @@
         {%- for block in section.blocks -%}
           {%- if block.type == 'gallery_image' -%}
             {%- assign thumb_count = thumb_count | plus: 1 -%}
+
             {%- if block.settings.image != blank -%}
               {%- assign thumb_url = block.settings.image | image_url: width: 300 -%}
               {%- assign full_url = block.settings.image | image_url: width: 1200 -%}
-            {%- else -%}
-              {%- assign fallback_asset = 'lmra-product-main.svg' -%}
-              {%- case thumb_count -%}
-                {%- when 2 -%}
-                  {%- assign fallback_asset = 'lmra-product-detail-1.svg' -%}
-                {%- when 3 -%}
-                  {%- assign fallback_asset = 'lmra-product-detail-2.svg' -%}
-                {%- when 4 -%}
-                  {%- assign fallback_asset = 'lmra-product-detail-3.svg' -%}
-              {%- endcase -%}
-              {%- assign thumb_url = fallback_asset | asset_url -%}
-              {%- assign full_url = fallback_asset | asset_url -%}
+              <button class="product-gallery__thumb{% if thumb_count == 1 %} is-active{% endif %}" type="button" data-gallery-thumb data-full="{{ full_url }}" aria-label="Show product image {{ thumb_count }}" {{ block.shopify_attributes }}>
+                <img src="{{ thumb_url }}" alt="{{ block.settings.alt | escape }}" width="180" height="180">
+              </button>
             {%- endif -%}
-            <button class="product-gallery__thumb{% if thumb_count == 1 %} is-active{% endif %}" type="button" data-gallery-thumb data-full="{{ full_url }}" aria-label="Show product image {{ thumb_count }}" {{ block.shopify_attributes }}>
-              <img src="{{ thumb_url }}" alt="{{ block.settings.alt | escape }}" width="180" height="180">
-            </button>
           {%- endif -%}
         {%- endfor -%}
       </div>
@@ -100,7 +91,9 @@
     <ul class="product-bullets">
       {%- for block in section.blocks -%}
         {%- if block.type == 'bullet' -%}
-          <li {{ block.shopify_attributes }}><span aria-hidden="true">{{ block.settings.icon }}</span>{{ block.settings.text }}</li>
+          <li {{ block.shopify_attributes }}>
+            <span aria-hidden="true">{{ block.settings.icon }}</span>{{ block.settings.text }}
+          </li>
         {%- endif -%}
       {%- endfor -%}
     </ul>
@@ -109,36 +102,38 @@
       <input type="hidden" name="id" data-variant-id value="{% if selected_variant != blank %}{{ selected_variant.id }}{% endif %}">
       <input type="hidden" name="quantity" data-product-quantity value="1">
 
-      {% comment %}
-        Connect this section to the real Shopify product by selecting "Featured product"
-        in the theme customizer or by assigning this template to the product page.
-        Product images can be replaced with image picker blocks below.
-      {% endcomment %}
       {%- if featured_product != blank -%}
         <script type="application/json" data-product-json>{{ featured_product | json }}</script>
       {%- endif -%}
 
       <fieldset class="option-fieldset" data-option-group>
         <legend>{{ section.settings.variant_label }}</legend>
-        <button class="option-pill is-active" type="button" data-option-index="0" data-option-value="{{ section.settings.size_small | escape }}" aria-pressed="true">{{ section.settings.size_small }}</button>
-        <button class="option-pill" type="button" data-option-index="0" data-option-value="{{ section.settings.size_large | escape }}" aria-pressed="false">{{ section.settings.size_large }}</button>
+        <button class="option-pill is-active" type="button" data-option-index="0" data-option-value="{{ section.settings.size_small | escape }}" aria-pressed="true">
+          {{ section.settings.size_small }}
+        </button>
+        <button class="option-pill" type="button" data-option-index="0" data-option-value="{{ section.settings.size_large | escape }}" aria-pressed="false">
+          {{ section.settings.size_large }}
+        </button>
       </fieldset>
 
-      <div class="bundle-heading" aria-hidden="true"><span></span>{{ section.settings.bundle_heading }}<span></span></div>
+      <div class="bundle-heading" aria-hidden="true">
+        <span></span>{{ section.settings.bundle_heading }}<span></span>
+      </div>
+
       <fieldset class="bundle-options" data-bundle-group>
         <legend class="visually-hidden">{{ section.settings.bundle_heading }}</legend>
+
         <label class="bundle-card is-active">
-          <input type="radio" name="bundle" value="1" checked data-bundle-quantity="1" data-bundle-label="{{ section.settings.bundle_1_label | escape }}">
-          <span>
-            <strong>{{ section.settings.bundle_1_label }}</strong>
-          </span>
+          <input type="radio" name="bundle" value="1" checked data-bundle-quantity="1">
+          <span><strong>{{ section.settings.bundle_1_label }}</strong></span>
           <span class="bundle-card__price">
             <strong>{{ section.settings.bundle_1_price }}</strong>
             <s>{{ section.settings.bundle_1_compare }}</s>
           </span>
         </label>
+
         <label class="bundle-card">
-          <input type="radio" name="bundle" value="2" data-bundle-quantity="2" data-bundle-label="{{ section.settings.bundle_2_label | escape }}">
+          <input type="radio" name="bundle" value="2" data-bundle-quantity="2">
           <span>
             <strong>{{ section.settings.bundle_2_label }}</strong>
             <em>{{ section.settings.bundle_2_badge }}</em>
@@ -153,6 +148,7 @@
       <button class="button button--primary product-form__submit" type="submit" data-add-to-cart>
         {{ section.settings.add_to_cart_text }}
       </button>
+
       <p class="form-message" role="status" data-form-message></p>
     </form>
 
@@ -168,18 +164,27 @@
 
     <div class="shipping-timeline" aria-label="Shipping timeline">
       <div class="shipping-timeline__line"></div>
+
       <div class="shipping-step">
-        <span class="shipping-step__icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6h15l-2 9H8L6 3H3"/></svg></span>
+        <span class="shipping-step__icon">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6h15l-2 9H8L6 3H3"/></svg>
+        </span>
         <strong>{{ now_ts | date: "%b %-d" }}</strong>
         <span>{{ section.settings.timeline_ordered }}</span>
       </div>
+
       <div class="shipping-step">
-        <span class="shipping-step__icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 7h11v10H3zM14 10h4l3 3v4h-7z"/></svg></span>
+        <span class="shipping-step__icon">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 7h11v10H3zM14 10h4l3 3v4h-7z"/></svg>
+        </span>
         <strong>{{ prep_ts | date: "%b %-d" }} - {{ prep_ts | plus: 691200 | date: "%b %-d" }}</strong>
         <span>{{ section.settings.timeline_prepared }}</span>
       </div>
+
       <div class="shipping-step">
-        <span class="shipping-step__icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 12v10H4V12m16 0H4m16 0-2-6H6l-2 6m8-6v16"/></svg></span>
+        <span class="shipping-step__icon">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 12v10H4V12m16 0H4m16 0-2-6H6l-2 6m8-6v16"/></svg>
+        </span>
         <strong>{{ deliver_ts | date: "%b %-d" }} - {{ deliver_ts | plus: 864000 | date: "%b %-d" }}</strong>
         <span>{{ section.settings.timeline_delivered }}</span>
       </div>
@@ -192,10 +197,132 @@
         <strong>{{ product_title }}</strong>
         <p><span>{{ price_text }}</span> <s>{{ compare_text }}</s> <em>{{ section.settings.save_badge }}</em></p>
       </div>
-      <button class="button button--primary" type="button" data-sticky-add>{{ section.settings.add_to_cart_text }}</button>
+      <button class="button button--primary" type="button" data-sticky-add>
+        {{ section.settings.add_to_cart_text }}
+      </button>
     </div>
   {%- endif -%}
 </section>
+
+<script>
+  document.addEventListener('click', function(event) {
+    var optionButton = event.target.closest('[data-option-value]');
+    if (!optionButton) return;
+
+    var form = optionButton.closest('[data-product-form]');
+    if (!form) return;
+
+    var group = optionButton.closest('[data-option-group]');
+    if (group) {
+      group.querySelectorAll('[data-option-value]').forEach(function(button) {
+        button.classList.remove('is-active');
+        button.setAttribute('aria-pressed', 'false');
+      });
+    }
+
+    optionButton.classList.add('is-active');
+    optionButton.setAttribute('aria-pressed', 'true');
+
+    var productJson = form.querySelector('[data-product-json]');
+    var variantInput = form.querySelector('[data-variant-id]');
+    if (!productJson || !variantInput) return;
+
+    var product = JSON.parse(productJson.textContent);
+    var selectedValue = optionButton.getAttribute('data-option-value');
+
+    var variant = product.variants.find(function(item) {
+      return item.options.indexOf(selectedValue) !== -1;
+    });
+
+    if (variant) {
+      variantInput.value = variant.id;
+    }
+  });
+
+  document.addEventListener('change', function(event) {
+    if (!event.target.matches('[data-bundle-quantity]')) return;
+
+    var form = event.target.closest('[data-product-form]');
+    if (!form) return;
+
+    var quantityInput = form.querySelector('[data-product-quantity]');
+    if (quantityInput) {
+      quantityInput.value = event.target.getAttribute('data-bundle-quantity') || '1';
+    }
+
+    form.querySelectorAll('.bundle-card').forEach(function(card) {
+      card.classList.remove('is-active');
+    });
+
+    event.target.closest('.bundle-card').classList.add('is-active');
+  });
+
+  document.addEventListener('submit', async function(event) {
+    var form = event.target;
+    if (!form.matches('[data-product-form]')) return;
+
+    event.preventDefault();
+
+    var message = form.querySelector('[data-form-message]');
+    var button = form.querySelector('[data-add-to-cart]');
+    var variantInput = form.querySelector('[data-variant-id]');
+    var quantityInput = form.querySelector('[data-product-quantity]');
+
+    if (!variantInput || !variantInput.value) {
+      if (message) message.textContent = 'Please select a product in Product hero settings first.';
+      return;
+    }
+
+    if (button) button.disabled = true;
+    if (message) message.textContent = 'Adding...';
+
+    try {
+      var response = await fetch('/cart/add.js', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        },
+        body: JSON.stringify({
+          id: Number(variantInput.value),
+          quantity: Number(quantityInput ? quantityInput.value : 1)
+        })
+      });
+
+      if (!response.ok) {
+        throw new Error('Could not add to cart.');
+      }
+
+      var cartResponse = await fetch('/cart.js');
+      var cart = await cartResponse.json();
+
+      document.querySelectorAll('[data-cart-count]').forEach(function(count) {
+        count.textContent = cart.item_count;
+      });
+
+      if (message) message.textContent = 'Added to cart.';
+
+      var cartButton = document.querySelector('[data-cart-open]');
+      if (cartButton) {
+        cartButton.click();
+      }
+    } catch (error) {
+      if (message) message.textContent = error.message;
+    } finally {
+      if (button) button.disabled = false;
+    }
+  });
+
+  document.addEventListener('click', function(event) {
+    var stickyButton = event.target.closest('[data-sticky-add]');
+    if (!stickyButton) return;
+
+    var form = document.querySelector('[data-product-form]');
+    if (form) {
+      form.requestSubmit();
+    }
+  });
+</script>
 
 {% schema %}
 {
