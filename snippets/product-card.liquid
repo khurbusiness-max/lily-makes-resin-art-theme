@@ -4,6 +4,7 @@
   assign card_compare = section.settings.fallback_compare
   assign card_url = routes.root_url
   assign card_image = blank
+  assign catalog_image = section.settings.catalog_image
 
   if product != blank
     assign card_title = product.title
@@ -14,17 +15,22 @@
     assign card_url = product.url
     assign card_image = product.featured_image
   endif
+
+  if catalog_image != blank
+    assign card_image = catalog_image
+  endif
 -%}
 
 <article class="product-card">
   <a class="product-card__image" href="{{ card_url }}" aria-label="{{ card_title | escape }}">
     {%- if card_image != blank -%}
-      <img src="{{ card_image | image_url: width: 640 }}" alt="{{ card_image.alt | default: card_title | escape }}" width="640" height="640" loading="lazy">
+      <img src="{{ card_image | image_url: width: 700 }}" alt="{{ card_image.alt | default: card_title | escape }}" width="700" height="700" loading="lazy">
     {%- else -%}
-      <img src="{{ 'lmra-product-main.svg' | asset_url }}" alt="{{ card_title | escape }}" width="640" height="640" loading="lazy">
+      <img src="{{ 'lmra-product-main.svg' | asset_url }}" alt="{{ card_title | escape }}" width="700" height="700" loading="lazy">
     {%- endif -%}
     <span>{{ section.settings.discount_badge }}</span>
   </a>
+
   <div class="product-card__body">
     <h2><a href="{{ card_url }}">{{ card_title }}</a></h2>
     <p><strong>From {{ card_price }}</strong> <s>{{ card_compare }}</s></p>
