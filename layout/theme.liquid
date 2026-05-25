@@ -38,7 +38,9 @@
       };
     </script>
     <script src="{{ 'theme.js' | asset_url }}" defer></script>
-  </head>
+  
+{{ 'custom-styles.css' | asset_url | stylesheet_tag }}
+</head>
 
   <body class="template-{{ template.name | handle }}">
     <a class="skip-link" href="#MainContent">Skip to content</a>
