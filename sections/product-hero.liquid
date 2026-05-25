@@ -37,13 +37,21 @@
             {%- if block.settings.image != blank -%}
               <img src="{{ block.settings.image | image_url: width: 1200 }}" alt="{{ block.settings.alt | escape }}" width="1200" height="1200" data-gallery-main>
             {%- else -%}
-              {{ 'image' | placeholder_svg_tag: 'product-placeholder' }}
+              <svg class="product-placeholder" viewBox="0 0 1200 1200" role="img" aria-label="Product image placeholder">
+  <rect width="1200" height="1200" fill="#050609"></rect>
+  <rect x="330" y="170" width="540" height="760" rx="30" fill="#273985"></rect>
+  <circle cx="600" cy="520" r="150" fill="#38bdf8"></circle>
+</svg>
             {%- endif -%}
           {%- endif -%}
         {%- endfor -%}
 
         {%- if first_image_rendered == false -%}
-          {{ 'image' | placeholder_svg_tag: 'product-placeholder' }}
+          <svg class="product-placeholder" viewBox="0 0 1200 1200" role="img" aria-label="Product image placeholder">
+  <rect width="1200" height="1200" fill="#050609"></rect>
+  <rect x="330" y="170" width="540" height="760" rx="30" fill="#273985"></rect>
+  <circle cx="600" cy="520" r="150" fill="#38bdf8"></circle>
+</svg>
         {%- endif -%}
       </div>
 
