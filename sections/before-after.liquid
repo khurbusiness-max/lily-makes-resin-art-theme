@@ -1,42 +1,63 @@
+Your code looks okay, but Shopify’s editor may still be reading old bad text lower in the file or above line 1.
+
+Do this exactly:
+
+1. Click inside `before-after.liquid`
+2. Press `Ctrl + A`
+3. Press `Backspace`
+4. Paste the code below
+5. Save
+
+Use this simpler version. It has no inline JavaScript, so Shopify should not mark it red.
+
+```liquid
 <section class="ba-section page-width" id="BeforeAfter-{{ section.id }}">
   <div class="ba-copy">
     <h2>{{ section.settings.heading }}</h2>
     <p>{{ section.settings.text }}</p>
   </div>
 
-  <div class="ba-slider" style="--ba-position: 50%;" data-ba-slider>
-    <div class="ba-image ba-image--after">
-      <span class="ba-label ba-label--after">{{ section.settings.after_label }}</span>
-      {%- if section.settings.after_image != blank -%}
-        <img src="{{ section.settings.after_image | image_url: width: 1000 }}" alt="{{ section.settings.after_alt | escape }}" loading="lazy">
-      {%- else -%}
-        <img src="{{ 'lmra-after.svg' | asset_url }}" alt="{{ section.settings.after_alt | escape }}" loading="lazy">
-      {%- endif -%}
-    </div>
+<div class="ba-slider" style="--ba-position: 50%;">
+  <div class="ba-image ba-image--after">
+    <span class="ba-label ba-label--after">{{ section.settings.after_label }}</span>
 
-    <div class="ba-image ba-image--before">
-      <span class="ba-label ba-label--before">{{ section.settings.before_label }}</span>
-      {%- if section.settings.before_image != blank -%}
-        <img src="{{ section.settings.before_image | image_url: width: 1000 }}" alt="{{ section.settings.before_alt | escape }}" loading="lazy">
-      {%- else -%}
-        <img src="{{ 'lmra-before.svg' | asset_url }}" alt="{{ section.settings.before_alt | escape }}" loading="lazy">
-      {%- endif -%}
-    </div>
+    {% if section.settings.after_image %}
+      {{ section.settings.after_image | image_url: width: 1000 | image_tag: loading: 'lazy', alt: section.settings.after_alt }}
+    {% else %}
+      <img src="{{ 'lmra-after.svg' | asset_url }}" alt="{{ section.settings.after_alt | escape }}" loading="lazy">
+    {% endif %}
+  </div>
+
+  <div class="ba-image ba-image--before">
+    <span class="ba-label ba-label--before">{{ section.settings.before_label }}</span>
+
+    {% if section.settings.before_image %}
+      {{ section.settings.before_image | image_url: width: 1000 | image_tag: loading: 'lazy', alt: section.settings.before_alt }}
+    {% else %}
+      <img src="{{ 'lmra-before.svg' | asset_url }}" alt="{{ section.settings.before_alt | escape }}" loading="lazy">
+    {% endif %}
+  </div>
+
+  <div class="ba-handle" aria-hidden="true">
+    <span></span>
+  </div>
+
+  <input
+    class="ba-range"
+    type="range"
+    min="0"
+    max="100"
+    value="50"
+    step="1"
+    aria-label="Move slider to compare morning and night mode"
+  >
+</div>
 
     <div class="ba-handle" aria-hidden="true">
       <span></span>
     </div>
 
-    <input
-      class="ba-range"
-      type="range"
-      min="0"
-      max="100"
-      value="50"
-      step="1"
-      aria-label="Move slider to compare morning and night mode"
-      oninput="this.parentElement.style.setProperty('--ba-position', this.value + '%')"
-    >
+    <input class="ba-range" type="range" min="0" max="100" value="50" step="1" aria-label="Move slider to compare morning and night mode">
   </div>
 </section>
 
@@ -82,19 +103,19 @@
   }
 
   #BeforeAfter-{{ section.id }} .ba-image img {
+    display: block;
     width: 100%;
     height: 100%;
-    display: block;
     object-fit: cover;
+  }
+
+  #BeforeAfter-{{ section.id }} .ba-image--after {
+    z-index: 1;
   }
 
   #BeforeAfter-{{ section.id }} .ba-image--before {
     z-index: 2;
     clip-path: inset(0 calc(100% - var(--ba-position)) 0 0);
-  }
-
-  #BeforeAfter-{{ section.id }} .ba-image--after {
-    z-index: 1;
   }
 
   #BeforeAfter-{{ section.id }} .ba-label {
@@ -140,27 +161,6 @@
     box-shadow: 0 4px 14px rgba(0, 0, 0, 0.25);
   }
 
-  #BeforeAfter-{{ section.id }} .ba-handle span::before,
-  #BeforeAfter-{{ section.id }} .ba-handle span::after {
-    content: "";
-    position: absolute;
-    top: 50%;
-    width: 8px;
-    height: 8px;
-    border-top: 2px solid #273985;
-    border-left: 2px solid #273985;
-  }
-
-  #BeforeAfter-{{ section.id }} .ba-handle span::before {
-    left: 10px;
-    transform: translateY(-50%) rotate(-45deg);
-  }
-
-  #BeforeAfter-{{ section.id }} .ba-handle span::after {
-    right: 10px;
-    transform: translateY(-50%) rotate(135deg);
-  }
-
   #BeforeAfter-{{ section.id }} .ba-range {
     position: absolute;
     inset: 0;
@@ -179,6 +179,15 @@
     }
   }
 </style>
+
+<script>
+  document.addEventListener('input', function(event) {
+    if (!event.target.classList.contains('ba-range')) return;
+    var slider = event.target.closest('.ba-slider');
+    if (!slider) return;
+    slider.style.setProperty('--ba-position', event.target.value + '%');
+  });
+</script>
 
 {% schema %}
 {
@@ -238,3 +247,4 @@
   ]
 }
 {% endschema %}
+```
