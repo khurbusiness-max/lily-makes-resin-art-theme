@@ -150,6 +150,13 @@
     "faq": {
       "type": "faq",
       "blocks": {
+        "faq_aHE89Y": {
+          "type": "faq",
+          "settings": {
+            "question": "How are the lamps made?",
+            "answer": "<p>Each lamp is individually hand-poured with resin, layered decorative details, and a built-in light source. Small variations are expected and make every piece unique.</p>"
+          }
+        },
         "faq_1": {
           "type": "faq",
           "settings": {
@@ -180,34 +187,21 @@
         }
       },
       "block_order": [
+        "faq_aHE89Y",
         "faq_1",
         "faq_2",
         "faq_3",
         "faq_4"
       ],
+      "custom_css": [],
       "settings": {
         "heading": "FAQ"
-      }
-    },
-    "before_after_wGMMdq": {
-      "type": "before-after",
-      "name": "Before and after",
-      "settings": {
-        "heading": "From Desk Decor to Movie Scene",
-        "text": "Slide to see the difference. By day, it is a detailed handmade resin display. At night, the blue glow turns it into a dramatic monster scene for your room.",
-        "before_label": "Before",
-        "before_image": "shopify://shop_images/day.png",
-        "before_alt": "Resin lamp in daylight",
-        "after_label": "After",
-        "after_image": "shopify://shop_images/night.png",
-        "after_alt": "Resin lamp glowing at night"
       }
     }
   },
   "order": [
     "product_hero",
     "testimonials",
-    "faq",
-    "before_after_wGMMdq"
+    "faq"
   ]
 }
