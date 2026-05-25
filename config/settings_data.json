@@ -33,7 +33,7 @@
           ".product-card__image span {position: absolute; left: 12px; bottom: 14px;}"
         ],
         "settings": {
-          "footer_image": "shopify://shop_images/shopphoto_4.png",
+          "footer_image": "shopify://shop_images/pfps.png",
           "footer_image_alt": "Lily Makes Resin Art mark",
           "links_heading": "Quick links",
           "newsletter_heading": "Subscribe to our emails",

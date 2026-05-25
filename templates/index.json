@@ -197,11 +197,26 @@
       "settings": {
         "heading": "FAQ"
       }
+    },
+    "before_after_QEGgV4": {
+      "type": "before-after",
+      "name": "Before and after",
+      "settings": {
+        "heading": "From Desk Decor to Movie Scene",
+        "text": "Slide to see the difference. By day, it is a detailed handmade resin display. At night, the blue glow turns it into a dramatic monster resin scene for your room.",
+        "before_label": "Before",
+        "before_image": "shopify://shop_images/day.png",
+        "before_alt": "Resin lamp in daylight",
+        "after_label": "After",
+        "after_image": "shopify://shop_images/night.png",
+        "after_alt": "Resin lamp glowing at night"
+      }
     }
   },
   "order": [
     "product_hero",
     "testimonials",
-    "faq"
+    "faq",
+    "before_after_QEGgV4"
   ]
 }
