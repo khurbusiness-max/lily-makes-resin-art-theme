@@ -109,7 +109,7 @@
   }
 
   async function changeCartItem(key, quantity) {
-    const response = await fetch('/cart/change.js', {
+    const response = await fetchfetch('/cart.js')', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
