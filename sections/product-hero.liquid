@@ -31,32 +31,35 @@
     <div class="product-gallery">
       <div class="product-gallery__main">
         {%- assign first_image_rendered = false -%}
+
         {%- for block in section.blocks -%}
           {%- if block.type == 'gallery_image' and first_image_rendered == false -%}
             {%- assign first_image_rendered = true -%}
+
             {%- if block.settings.image != blank -%}
               <img src="{{ block.settings.image | image_url: width: 1200 }}" alt="{{ block.settings.alt | escape }}" width="1200" height="1200" data-gallery-main>
             {%- else -%}
               <svg class="product-placeholder" viewBox="0 0 1200 1200" role="img" aria-label="Product image placeholder">
-  <rect width="1200" height="1200" fill="#050609"></rect>
-  <rect x="330" y="170" width="540" height="760" rx="30" fill="#273985"></rect>
-  <circle cx="600" cy="520" r="150" fill="#38bdf8"></circle>
-</svg>
+                <rect width="1200" height="1200" fill="#050609"></rect>
+                <rect x="330" y="170" width="540" height="760" rx="30" fill="#273985"></rect>
+                <circle cx="600" cy="520" r="150" fill="#38bdf8"></circle>
+              </svg>
             {%- endif -%}
           {%- endif -%}
         {%- endfor -%}
 
         {%- if first_image_rendered == false -%}
           <svg class="product-placeholder" viewBox="0 0 1200 1200" role="img" aria-label="Product image placeholder">
-  <rect width="1200" height="1200" fill="#050609"></rect>
-  <rect x="330" y="170" width="540" height="760" rx="30" fill="#273985"></rect>
-  <circle cx="600" cy="520" r="150" fill="#38bdf8"></circle>
-</svg>
+            <rect width="1200" height="1200" fill="#050609"></rect>
+            <rect x="330" y="170" width="540" height="760" rx="30" fill="#273985"></rect>
+            <circle cx="600" cy="520" r="150" fill="#38bdf8"></circle>
+          </svg>
         {%- endif -%}
       </div>
 
       <div class="product-gallery__thumbs" aria-label="Product images">
         {%- assign thumb_count = 0 -%}
+
         {%- for block in section.blocks -%}
           {%- if block.type == 'gallery_image' -%}
             {%- assign thumb_count = thumb_count | plus: 1 -%}
@@ -64,6 +67,7 @@
             {%- if block.settings.image != blank -%}
               {%- assign thumb_url = block.settings.image | image_url: width: 300 -%}
               {%- assign full_url = block.settings.image | image_url: width: 1200 -%}
+
               <button class="product-gallery__thumb{% if thumb_count == 1 %} is-active{% endif %}" type="button" data-gallery-thumb data-full="{{ full_url }}" aria-label="Show product image {{ thumb_count }}" {{ block.shopify_attributes }}>
                 <img src="{{ thumb_url }}" alt="{{ block.settings.alt | escape }}" width="180" height="180">
               </button>
@@ -116,9 +120,11 @@
 
       <fieldset class="option-fieldset" data-option-group>
         <legend>{{ section.settings.variant_label }}</legend>
+
         <button class="option-pill is-active" type="button" data-option-index="0" data-option-value="{{ section.settings.size_small | escape }}" aria-pressed="true">
           {{ section.settings.size_small }}
         </button>
+
         <button class="option-pill" type="button" data-option-index="0" data-option-value="{{ section.settings.size_large | escape }}" aria-pressed="false">
           {{ section.settings.size_large }}
         </button>
@@ -205,6 +211,7 @@
         <strong>{{ product_title }}</strong>
         <p><span>{{ price_text }}</span> <s>{{ compare_text }}</s> <em>{{ section.settings.save_badge }}</em></p>
       </div>
+
       <button class="button button--primary" type="button" data-sticky-add>
         {{ section.settings.add_to_cart_text }}
       </button>
@@ -221,6 +228,7 @@
     if (!form) return;
 
     var group = optionButton.closest('[data-option-group]');
+
     if (group) {
       group.querySelectorAll('[data-option-value]').forEach(function(button) {
         button.classList.remove('is-active');
@@ -233,6 +241,7 @@
 
     var productJson = form.querySelector('[data-product-json]');
     var variantInput = form.querySelector('[data-variant-id]');
+
     if (!productJson || !variantInput) return;
 
     var product = JSON.parse(productJson.textContent);
@@ -254,6 +263,7 @@
     if (!form) return;
 
     var quantityInput = form.querySelector('[data-product-quantity]');
+
     if (quantityInput) {
       quantityInput.value = event.target.getAttribute('data-bundle-quantity') || '1';
     }
@@ -262,10 +272,11 @@
       card.classList.remove('is-active');
     });
 
-    event.target.closest('.bundle-card').classList.add('is-active');
+    var selectedCard = event.target.closest('.bundle-card');
+    if (selectedCard) selectedCard.classList.add('is-active');
   });
 
- document.addEventListener('submit', function(event) {
+  document.addEventListener('submit', function(event) {
     var form = event.target;
     if (!form.matches('[data-product-form]')) return;
 
@@ -284,41 +295,40 @@
     if (button) button.disabled = true;
     if (message) message.textContent = 'Adding...';
 
-    try {
-      var response = await fetch('/cart/add.js', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Accept': 'application/json'
-        },
-        body: JSON.stringify({
-          id: Number(variantInput.value),
-          quantity: Number(quantityInput ? quantityInput.value : 1)
-        })
+    fetch('/cart/add.js', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json'
+      },
+      body: JSON.stringify({
+        id: Number(variantInput.value),
+        quantity: Number(quantityInput ? quantityInput.value : 1)
+      })
+    })
+      .then(function(response) {
+        if (!response.ok) throw new Error('Could not add to cart.');
+        return fetch('/cart.js');
+      })
+      .then(function(cartResponse) {
+        return cartResponse.json();
+      })
+      .then(function(cart) {
+        document.querySelectorAll('[data-cart-count]').forEach(function(count) {
+          count.textContent = cart.item_count;
+        });
+
+        if (message) message.textContent = 'Added to cart.';
+
+        var cartButton = document.querySelector('[data-cart-open]');
+        if (cartButton) cartButton.click();
+      })
+      .catch(function(error) {
+        if (message) message.textContent = error.message;
+      })
+      .finally(function() {
+        if (button) button.disabled = false;
       });
-
-      if (!response.ok) {
-        throw new Error('Could not add to cart.');
-      }
-
-      var cartResponse = await fetch('/cart.js');
-      var cart = await cartResponse.json();
-
-      document.querySelectorAll('[data-cart-count]').forEach(function(count) {
-        count.textContent = cart.item_count;
-      });
-
-      if (message) message.textContent = 'Added to cart.';
-
-      var cartButton = document.querySelector('[data-cart-open]');
-      if (cartButton) {
-        cartButton.click();
-      }
-    } catch (error) {
-      if (message) message.textContent = error.message;
-    } finally {
-      if (button) button.disabled = false;
-    }
   });
 
   document.addEventListener('click', function(event) {
@@ -326,8 +336,11 @@
     if (!stickyButton) return;
 
     var form = document.querySelector('[data-product-form]');
-    if (form) {
+
+    if (form && typeof form.requestSubmit === 'function') {
       form.requestSubmit();
+    } else if (form) {
+      form.dispatchEvent(new Event('submit', { bubbles: true, cancelable: true }));
     }
   });
 </script>
@@ -521,10 +534,18 @@
     {
       "name": "Product hero",
       "blocks": [
-        { "type": "gallery_image" },
-        { "type": "gallery_image" },
-        { "type": "gallery_image" },
-        { "type": "gallery_image" },
+        {
+          "type": "gallery_image"
+        },
+        {
+          "type": "gallery_image"
+        },
+        {
+          "type": "gallery_image"
+        },
+        {
+          "type": "gallery_image"
+        },
         {
           "type": "bullet",
           "settings": {
