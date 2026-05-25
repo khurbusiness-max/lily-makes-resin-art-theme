@@ -1,6 +1,536 @@
+{% doc %}
+  @prompt
+    Fix the "Before and After" image slider section so it properly displays an interactive drag slider between two images (before and after). The section already has the heading, text, before image, and after image set up, but the slider is not rendering — only the text is showing. The slider should show both images side by side with a draggable divider that reveals one image over the other.
+{% enddoc %}
+{% assign ai_gen_id = block.id | replace: '_', '' | downcase %}
+
+{% style %}
+  .ai-before-after-{{ ai_gen_id }} {
+    display: block;
+    width: {{ block.settings.desktop_width_percent }}%;
+    max-width: 100%;
+    margin: 0 auto;
+    padding: 40px 20px;
+  }
+
+  .ai-before-after__header-{{ ai_gen_id }} {
+    text-align: center;
+    margin-bottom: 30px;
+  }
+
+  .ai-before-after__heading-{{ ai_gen_id }} {
+    font-size: {{ block.settings.heading_size }}px;
+    color: {{ block.settings.heading_color }};
+    margin: 0 0 12px 0;
+  }
+
+  .ai-before-after__text-{{ ai_gen_id }} {
+    font-size: {{ block.settings.text_size }}px;
+    color: {{ block.settings.text_color }};
+    margin: 0;
+  }
+
+  .ai-before-after__slider-container-{{ ai_gen_id }} {
+    position: relative;
+    width: 100%;
+    max-width: {{ block.settings.max_width }}px;
+    margin: 0 auto;
+    overflow: hidden;
+    border-radius: {{ block.settings.border_radius }}px;
+    user-select: none;
+    touch-action: none;
+  }
+
+  .ai-before-after__image-wrapper-{{ ai_gen_id }} {
+    position: relative;
+    width: 100%;
+    aspect-ratio: {{ block.settings.aspect_ratio }};
+  }
+
+  .ai-before-after__image-{{ ai_gen_id }} {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .ai-before-after__after-image-{{ ai_gen_id }} {
+    z-index: 1;
+  }
+
+  .ai-before-after__before-image-{{ ai_gen_id }} {
+    z-index: 2;
+    clip-path: inset(0 0 0 0);
+  }
+
+  .ai-before-after__divider-{{ ai_gen_id }} {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 4px;
+    background-color: {{ block.settings.divider_color }};
+    z-index: 3;
+    cursor: ew-resize;
+    transform: translateX(-50%);
+  }
+
+  .ai-before-after__handle-{{ ai_gen_id }} {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: {{ block.settings.handle_size }}px;
+    height: {{ block.settings.handle_size }}px;
+    background-color: {{ block.settings.handle_color }};
+    border: 3px solid {{ block.settings.divider_color }};
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+  }
+
+  .ai-before-after__handle-icon-{{ ai_gen_id }} {
+    display: flex;
+    gap: 2px;
+  }
+
+  .ai-before-after__arrow-{{ ai_gen_id }} {
+    width: 0;
+    height: 0;
+    border-top: 6px solid transparent;
+    border-bottom: 6px solid transparent;
+  }
+
+  .ai-before-after__arrow-left-{{ ai_gen_id }} {
+    border-right: 6px solid {{ block.settings.arrow_color }};
+  }
+
+  .ai-before-after__arrow-right-{{ ai_gen_id }} {
+    border-left: 6px solid {{ block.settings.arrow_color }};
+  }
+
+  .ai-before-after__label-{{ ai_gen_id }} {
+    position: absolute;
+    top: 20px;
+    padding: 8px 16px;
+    background-color: {{ block.settings.label_bg_color }};
+    color: {{ block.settings.label_text_color }};
+    font-size: 14px;
+    font-weight: 600;
+    border-radius: 4px;
+    z-index: 4;
+    pointer-events: none;
+  }
+
+  .ai-before-after__label-before-{{ ai_gen_id }} {
+    left: 20px;
+  }
+
+  .ai-before-after__label-after-{{ ai_gen_id }} {
+    right: 20px;
+  }
+
+  .ai-before-after__placeholder-{{ ai_gen_id }} {
+    position: relative;
+    width: 100%;
+    aspect-ratio: {{ block.settings.aspect_ratio }};
+    background-color: #f4f4f4;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: {{ block.settings.border_radius }}px;
+  }
+
+  .ai-before-after__placeholder-{{ ai_gen_id }} svg {
+    width: 100%;
+    height: 100%;
+    max-width: 300px;
+    max-height: 300px;
+  }
+
+  .ai-before-after__empty-state-{{ ai_gen_id }} {
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 12px 20px;
+    font-size: 14px;
+    color: #666;
+    text-align: center;
+    pointer-events: none;
+  }
+
+  @media screen and (max-width: 749px) {
+    .ai-before-after__heading-{{ ai_gen_id }} {
+      font-size: calc({{ block.settings.heading_size }}px * 0.8);
+    }
+
+    .ai-before-after__text-{{ ai_gen_id }} {
+      font-size: calc({{ block.settings.text_size }}px * 0.9);
+    }
+
+    .ai-before-after__label-{{ ai_gen_id }} {
+      font-size: 12px;
+      padding: 6px 12px;
+    }
+  }
+{% endstyle %}
+
+<before-after-slider-{{ ai_gen_id }}
+  class="ai-before-after-{{ ai_gen_id }}"
+  {{ block.shopify_attributes }}
+>
+  {% if block.settings.heading != blank or block.settings.text != blank %}
+    <div class="ai-before-after__header-{{ ai_gen_id }}">
+      {% if block.settings.heading != blank %}
+        <h2 class="ai-before-after__heading-{{ ai_gen_id }}">{{ block.settings.heading }}</h2>
+      {% endif %}
+      {% if block.settings.text != blank %}
+        <div class="ai-before-after__text-{{ ai_gen_id }}">{{ block.settings.text }}</div>
+      {% endif %}
+    </div>
+  {% endif %}
+
+  {% if block.settings.before_image != blank and block.settings.after_image != blank %}
+    <div class="ai-before-after__slider-container-{{ ai_gen_id }}">
+      <div class="ai-before-after__image-wrapper-{{ ai_gen_id }}">
+        <img
+          src="{{ block.settings.after_image | image_url: width: 2000 }}"
+          alt="{{ block.settings.after_label | escape }}"
+          class="ai-before-after__image-{{ ai_gen_id }} ai-before-after__after-image-{{ ai_gen_id }}"
+          loading="lazy"
+          width="{{ block.settings.after_image.width }}"
+          height="{{ block.settings.after_image.height }}"
+        >
+        <img
+          src="{{ block.settings.before_image | image_url: width: 2000 }}"
+          alt="{{ block.settings.before_label | escape }}"
+          class="ai-before-after__image-{{ ai_gen_id }} ai-before-after__before-image-{{ ai_gen_id }}"
+          loading="lazy"
+          width="{{ block.settings.before_image.width }}"
+          height="{{ block.settings.before_image.height }}"
+        >
+        
+        <div class="ai-before-after__divider-{{ ai_gen_id }}" data-divider>
+          <div class="ai-before-after__handle-{{ ai_gen_id }}">
+            <div class="ai-before-after__handle-icon-{{ ai_gen_id }}">
+              <div class="ai-before-after__arrow-{{ ai_gen_id }} ai-before-after__arrow-left-{{ ai_gen_id }}"></div>
+              <div class="ai-before-after__arrow-{{ ai_gen_id }} ai-before-after__arrow-right-{{ ai_gen_id }}"></div>
+            </div>
+          </div>
+        </div>
+
+        {% if block.settings.show_labels %}
+          <div class="ai-before-after__label-{{ ai_gen_id }} ai-before-after__label-before-{{ ai_gen_id }}">
+            {{ block.settings.before_label }}
+          </div>
+          <div class="ai-before-after__label-{{ ai_gen_id }} ai-before-after__label-after-{{ ai_gen_id }}">
+            {{ block.settings.after_label }}
+          </div>
+        {% endif %}
+      </div>
+    </div>
+  {% else %}
+    <div class="ai-before-after__placeholder-{{ ai_gen_id }}">
+      {{ 'image' | placeholder_svg_tag }}
+      <div class="ai-before-after__empty-state-{{ ai_gen_id }}">
+        Add before and after images to see the slider
+      </div>
+    </div>
+  {% endif %}
+</before-after-slider-{{ ai_gen_id }}>
+
+<script>
+  (function() {
+    class BeforeAfterSlider{{ ai_gen_id }} extends HTMLElement {
+      constructor() {
+        super();
+        this.isDragging = false;
+        this.startPosition = {{ block.settings.initial_position }};
+      }
+
+      connectedCallback() {
+        this.container = this.querySelector('.ai-before-after__slider-container-{{ ai_gen_id }}');
+        this.divider = this.querySelector('[data-divider]');
+        this.beforeImage = this.querySelector('.ai-before-after__before-image-{{ ai_gen_id }}');
+        
+        if (!this.container || !this.divider || !this.beforeImage) return;
+
+        this.setInitialPosition();
+        this.setupEventListeners();
+      }
+
+      setInitialPosition() {
+        const position = this.startPosition;
+        this.updateSlider(position);
+      }
+
+      setupEventListeners() {
+        this.divider.addEventListener('mousedown', this.handleStart.bind(this));
+        this.divider.addEventListener('touchstart', this.handleStart.bind(this), { passive: true });
+        
+        document.addEventListener('mousemove', this.handleMove.bind(this));
+        document.addEventListener('touchmove', this.handleMove.bind(this), { passive: false });
+        
+        document.addEventListener('mouseup', this.handleEnd.bind(this));
+        document.addEventListener('touchend', this.handleEnd.bind(this));
+        
+        this.container.addEventListener('click', this.handleClick.bind(this));
+      }
+
+      handleStart(e) {
+        this.isDragging = true;
+        e.preventDefault();
+      }
+
+      handleMove(e) {
+        if (!this.isDragging) return;
+        
+        e.preventDefault();
+        const rect = this.container.getBoundingClientRect();
+        const clientX = e.type.includes('touch') ? e.touches[0].clientX : e.clientX;
+        const x = clientX - rect.left;
+        const percentage = Math.max(0, Math.min(100, (x / rect.width) * 100));
+        
+        this.updateSlider(percentage);
+      }
+
+      handleEnd() {
+        this.isDragging = false;
+      }
+
+      handleClick(e) {
+        if (e.target === this.divider || this.divider.contains(e.target)) return;
+        
+        const rect = this.container.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const percentage = Math.max(0, Math.min(100, (x / rect.width) * 100));
+        
+        this.updateSlider(percentage);
+      }
+
+      updateSlider(percentage) {
+        this.divider.style.left = percentage + '%';
+        this.beforeImage.style.clipPath = `inset(0 ${100 - percentage}% 0 0)`;
+      }
+    }
+
+    customElements.define('before-after-slider-{{ ai_gen_id }}', BeforeAfterSlider{{ ai_gen_id }});
+  })();
+</script>
+
 {% schema %}
- {
-   "name": "AI_Block",
-   "tag": "shopify-ai-generated-block"
- }
+{
+  "name": "Before and after slider",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Content"
+    },
+    {
+      "type": "richtext",
+      "id": "heading",
+      "label": "Heading",
+      "default": "<p>See the difference</p>"
+    },
+    {
+      "type": "richtext",
+      "id": "text",
+      "label": "Text",
+      "default": "<p>Drag the slider to compare before and after</p>"
+    },
+    {
+      "type": "header",
+      "content": "Images"
+    },
+    {
+      "type": "image_picker",
+      "id": "before_image",
+      "label": "Before image"
+    },
+    {
+      "type": "image_picker",
+      "id": "after_image",
+      "label": "After image"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_labels",
+      "label": "Show labels",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "before_label",
+      "label": "Before label",
+      "default": "Before"
+    },
+    {
+      "type": "text",
+      "id": "after_label",
+      "label": "After label",
+      "default": "After"
+    },
+    {
+      "type": "header",
+      "content": "Slider settings"
+    },
+    {
+      "type": "range",
+      "id": "initial_position",
+      "label": "Initial position",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "unit": "%",
+      "default": 50
+    },
+    {
+      "type": "select",
+      "id": "aspect_ratio",
+      "label": "Aspect ratio",
+      "options": [
+        {
+          "value": "16/9",
+          "label": "16:9"
+        },
+        {
+          "value": "4/3",
+          "label": "4:3"
+        },
+        {
+          "value": "1/1",
+          "label": "1:1"
+        },
+        {
+          "value": "3/4",
+          "label": "3:4"
+        }
+      ],
+      "default": "16/9"
+    },
+    {
+      "type": "range",
+      "id": "max_width",
+      "label": "Maximum width",
+      "min": 400,
+      "max": 1400,
+      "step": 100,
+      "unit": "px",
+      "default": 1000
+    },
+    {
+      "type": "range",
+      "id": "desktop_width_percent",
+      "label": "Desktop width",
+      "min": 50,
+      "max": 100,
+      "step": 5,
+      "unit": "%",
+      "default": 100
+    },
+    {
+      "type": "header",
+      "content": "Style"
+    },
+    {
+      "type": "range",
+      "id": "heading_size",
+      "label": "Heading size",
+      "min": 20,
+      "max": 60,
+      "step": 2,
+      "unit": "px",
+      "default": 32
+    },
+    {
+      "type": "range",
+      "id": "text_size",
+      "label": "Text size",
+      "min": 12,
+      "max": 24,
+      "step": 1,
+      "unit": "px",
+      "default": 16
+    },
+    {
+      "type": "color",
+      "id": "heading_color",
+      "label": "Heading color",
+      "default": "#101114"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text color",
+      "default": "#101114"
+    },
+    {
+      "type": "range",
+      "id": "border_radius",
+      "label": "Border radius",
+      "min": 0,
+      "max": 40,
+      "step": 2,
+      "unit": "px",
+      "default": 8
+    },
+    {
+      "type": "header",
+      "content": "Divider and handle"
+    },
+    {
+      "type": "color",
+      "id": "divider_color",
+      "label": "Divider color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "handle_color",
+      "label": "Handle background",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "arrow_color",
+      "label": "Arrow color",
+      "default": "#101114"
+    },
+    {
+      "type": "range",
+      "id": "handle_size",
+      "label": "Handle size",
+      "min": 30,
+      "max": 70,
+      "step": 5,
+      "unit": "px",
+      "default": 50
+    },
+    {
+      "type": "header",
+      "content": "Labels"
+    },
+    {
+      "type": "color",
+      "id": "label_bg_color",
+      "label": "Label background",
+      "default": "#000000"
+    },
+    {
+      "type": "color",
+      "id": "label_text_color",
+      "label": "Label text",
+      "default": "#ffffff"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Before and after slider"
+    }
+  ]
+}
 {% endschema %}
