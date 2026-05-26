@@ -2,16 +2,22 @@
   <h1>Your Cart</h1>
 
   {% if cart.item_count > 0 %}
-    <form action="/cart" method="post">
+    <form action="{{ routes.cart_url }}" method="post" novalidate>
 
       {% for item in cart.items %}
         <div style="display:flex;gap:20px;border-bottom:1px solid #ddd;padding:20px 0;align-items:center;">
 
           {% if item.image %}
-            <img src="{{ item.image | image_url: width: 120 }}" width="120">
+            <img
+              src="{{ item.image | image_url: width: 160 }}"
+              alt="{{ item.product.title | escape }}"
+              width="120"
+              height="120"
+              style="object-fit:cover;"
+            >
           {% endif %}
 
-          <div>
+          <div style="flex:1;">
             <h3>{{ item.product.title }}</h3>
 
             {% unless item.variant.title == 'Default Title' %}
@@ -20,13 +26,19 @@
 
             <p>{{ item.final_line_price | money }}</p>
 
+            <label for="Quantity-{{ item.index | plus: 1 }}">Quantity</label>
             <input
+              id="Quantity-{{ item.index | plus: 1 }}"
               type="number"
-              name="updates[]"
+              name="updates[{{ item.key }}]"
               value="{{ item.quantity }}"
               min="0"
-              style="width:60px;padding:5px;"
+              style="width:70px;padding:6px;"
             >
+
+            <p>
+              <a href="{{ item.url_to_remove }}">Remove</a>
+            </p>
           </div>
 
         </div>
@@ -35,24 +47,21 @@
       <h2>Total: {{ cart.total_price | money }}</h2>
 
       <div style="display:flex;gap:10px;margin-top:20px;">
-        <button type="submit" name="update">
+        <button type="submit" name="update" style="padding:12px 20px;">
           Update cart
         </button>
 
-        <button type="submit" name="checkout">
+        <button type="submit" name="checkout" style="padding:12px 20px;background:#273985;color:white;border:0;">
           Checkout
         </button>
       </div>
 
     </form>
-
   {% else %}
-
     <p>Your cart is empty.</p>
 
-    <a href="/collections/all">
+    <a href="{{ routes.all_products_collection_url }}">
       Continue shopping
     </a>
-
   {% endif %}
 </div>
