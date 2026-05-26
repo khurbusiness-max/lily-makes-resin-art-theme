@@ -140,6 +140,9 @@
         "testimonial_2",
         "testimonial_3"
       ],
+      "custom_css": [
+        ".product-hero img {max-width: 100%; width: auto; height: auto; object-fit: contain;}"
+      ],
       "settings": {
         "heading": "Testimonials"
       }
