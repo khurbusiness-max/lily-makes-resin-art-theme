@@ -71,6 +71,9 @@
         "bullet_2",
         "bullet_3"
       ],
+      "custom_css": [
+        ".product-hero img {max-width: 100%; width: auto; height: auto; object-fit: contain;}"
+      ],
       "settings": {
         "featured_product": "",
         "product_title": "Lily's Art | Monster Resin Glow Lamp",
