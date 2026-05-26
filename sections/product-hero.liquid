@@ -228,7 +228,6 @@
     if (!form) return;
 
     var group = optionButton.closest('[data-option-group]');
-
     if (group) {
       group.querySelectorAll('[data-option-value]').forEach(function(button) {
         button.classList.remove('is-active');
@@ -241,7 +240,6 @@
 
     var productJson = form.querySelector('[data-product-json]');
     var variantInput = form.querySelector('[data-variant-id]');
-
     if (!productJson || !variantInput) return;
 
     var product = JSON.parse(productJson.textContent);
@@ -263,7 +261,6 @@
     if (!form) return;
 
     var quantityInput = form.querySelector('[data-product-quantity]');
-
     if (quantityInput) {
       quantityInput.value = event.target.getAttribute('data-bundle-quantity') || '1';
     }
@@ -298,16 +295,22 @@
     fetch('/cart/add.js', {
       method: 'POST',
       headers: {
-        'Content-Type': 'application/json',
+        'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
         'Accept': 'application/json'
       },
-      body: JSON.stringify({
-        id: Number(variantInput.value),
-        quantity: Number(quantityInput ? quantityInput.value : 1)
-      })
+      body:
+        'id=' + encodeURIComponent(variantInput.value) +
+        '&quantity=' + encodeURIComponent(quantityInput ? quantityInput.value : '1')
     })
       .then(function(response) {
-        if (!response.ok) throw new Error('Could not add to cart.');
+        if (!response.ok) {
+          return response.json().then(function(errorData) {
+            throw new Error(errorData.description || errorData.message || 'Could not add to cart.');
+          });
+        }
+        return response.json();
+      })
+      .then(function() {
         return fetch('/cart.js');
       })
       .then(function(cartResponse) {
@@ -324,7 +327,7 @@
         if (cartButton) cartButton.click();
       })
       .catch(function(error) {
-        if (message) message.textContent = error.message;
+        if (message) message.textContent = error.message || 'Could not add to cart.';
       })
       .finally(function() {
         if (button) button.disabled = false;
@@ -336,10 +339,11 @@
     if (!stickyButton) return;
 
     var form = document.querySelector('[data-product-form]');
+    if (!form) return;
 
-    if (form && typeof form.requestSubmit === 'function') {
+    if (typeof form.requestSubmit === 'function') {
       form.requestSubmit();
-    } else if (form) {
+    } else {
       form.dispatchEvent(new Event('submit', { bubbles: true, cancelable: true }));
     }
   });
