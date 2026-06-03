@@ -7,7 +7,12 @@
     </nav>
 
     <a class="site-header__logo" href="{{ routes.root_url }}" aria-label="{{ section.settings.logo_text | escape }}">
-      {{ section.settings.logo_text }}
+      {%- assign logo_parts = section.settings.logo_text | split: ' | ' -%}
+      {%- if logo_parts.size > 1 -%}
+        {{ logo_parts[0] }} <span class="logo-accent">| {{ logo_parts[1] }}</span>
+      {%- else -%}
+        {{ section.settings.logo_text }}
+      {%- endif -%}
     </a>
 
     <div class="site-header__icons">

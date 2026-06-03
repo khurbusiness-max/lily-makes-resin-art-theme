@@ -1,8 +1,30 @@
-<section class="testimonials page-width">
+<section class="testimonials page-width rv">
   <h2>{{ section.settings.heading }}</h2>
+
+  {%- if section.settings.show_stats -%}
+  <div class="stats-grid">
+    <div class="stat-card rv">
+      <b data-count="{{ section.settings.stat_1_value }}">0+</b>
+      <small>{{ section.settings.stat_1_label }}</small>
+    </div>
+    <div class="stat-card rv">
+      <b data-count="{{ section.settings.stat_2_value }}">0+</b>
+      <small>{{ section.settings.stat_2_label }}</small>
+    </div>
+    <div class="stat-card rv">
+      <b data-count="{{ section.settings.stat_3_value }}">0+</b>
+      <small>{{ section.settings.stat_3_label }}</small>
+    </div>
+    <div class="stat-card rv">
+      <b style="font-family:var(--font-display);font-size:2.4rem;color:var(--glow);display:block;line-height:1;margin-bottom:6px">{{ section.settings.stat_4_value }}</b>
+      <small>{{ section.settings.stat_4_label }}</small>
+    </div>
+  </div>
+  {%- endif -%}
+
   <div class="testimonial-grid">
     {%- for block in section.blocks -%}
-      <article class="testimonial-card" {{ block.shopify_attributes }}>
+      <article class="testimonial-card rv" {{ block.shopify_attributes }}>
         <div class="testimonial-card__image">
           {%- if block.settings.image != blank -%}
             <img src="{{ block.settings.image | image_url: width: 720 }}" alt="{{ block.settings.image_alt | escape }}" width="720" height="540" loading="lazy">
@@ -35,6 +57,60 @@
       "id": "heading",
       "label": "Heading",
       "default": "What Godzilla Fans Are Saying"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_stats",
+      "label": "Show stats row",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "stat_1_value",
+      "label": "Stat 1 — number",
+      "default": "60"
+    },
+    {
+      "type": "text",
+      "id": "stat_1_label",
+      "label": "Stat 1 — label",
+      "default": "Verified Reviews"
+    },
+    {
+      "type": "text",
+      "id": "stat_2_value",
+      "label": "Stat 2 — number",
+      "default": "127"
+    },
+    {
+      "type": "text",
+      "id": "stat_2_label",
+      "label": "Stat 2 — label",
+      "default": "Happy Customers This Week"
+    },
+    {
+      "type": "text",
+      "id": "stat_3_value",
+      "label": "Stat 3 — number",
+      "default": "100"
+    },
+    {
+      "type": "text",
+      "id": "stat_3_label",
+      "label": "Stat 3 — label",
+      "default": "% Satisfaction Rate"
+    },
+    {
+      "type": "text",
+      "id": "stat_4_value",
+      "label": "Stat 4 — text value",
+      "default": "30-Day"
+    },
+    {
+      "type": "text",
+      "id": "stat_4_label",
+      "label": "Stat 4 — label",
+      "default": "Money-Back Guarantee"
     }
   ],
   "blocks": [

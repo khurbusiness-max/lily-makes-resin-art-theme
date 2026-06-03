@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="theme-color" content="{{ settings.color_primary | default: '#273985' }}">
+    <meta name="theme-color" content="#d63384">
     <link rel="canonical" href="{{ canonical_url }}">
 
     <title>
@@ -17,16 +17,23 @@
       <meta name="description" content="{{ page_description | escape }}">
     {%- endif -%}
 
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Anton&family=Sora:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
     {{ content_for_header }}
+
     <style>
       :root {
-        --color-primary: {{ settings.color_primary | default: '#273985' }};
-        --color-accent: {{ settings.color_accent | default: '#38bdf8' }};
-        --color-background: {{ settings.color_background | default: '#ffffff' }};
-        --color-text: {{ settings.color_text | default: '#101114' }};
+        --color-primary: {{ settings.color_primary | default: '#d63384' }};
+        --color-accent: {{ settings.color_accent | default: '#ff6bac' }};
+        --color-background: {{ settings.color_background | default: '#fff5f8' }};
+        --color-text: {{ settings.color_text | default: '#2a1219' }};
       }
     </style>
+
     {{ 'theme.css' | asset_url | stylesheet_tag }}
+    {{ 'custom-styles.css' | asset_url | stylesheet_tag }}
 
     <script>
       window.LMRA = {
@@ -38,9 +45,7 @@
       };
     </script>
     <script src="{{ 'theme.js' | asset_url }}" defer></script>
-  
-{{ 'custom-styles.css' | asset_url | stylesheet_tag }}
-</head>
+  </head>
 
   <body class="template-{{ template.name | handle }}">
     <a class="skip-link" href="#MainContent">Skip to content</a>
@@ -53,5 +58,19 @@
 
     {% render 'cart-drawer' %}
     {% section 'footer' %}
+
+    <div class="social-toast" id="social-toast" aria-live="polite" aria-atomic="true">
+      <div class="social-toast__icon">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
+      </div>
+      <div>
+        <b data-toast-name>Someone</b>
+        <small data-toast-loc>just bought the Godzilla Lamp</small>
+        <span class="verified-tag">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" width="10" height="10"><path d="M20 6 9 17l-5-5"/></svg>
+          Verified purchase
+        </span>
+      </div>
+    </div>
   </body>
 </html>
