@@ -294,6 +294,8 @@ button {
 
 .stock-badge {
   display: inline-flex;
+  align-items: center;
+  gap: 8px;
   border: 2px solid var(--color-primary);
   padding: 3px 10px;
   color: var(--color-primary);
@@ -301,6 +303,21 @@ button {
   font-weight: 950;
   letter-spacing: 0.04em;
   text-transform: uppercase;
+}
+
+.stock-badge__dot {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #ef4444;
+  flex-shrink: 0;
+  animation: pulse-dot 1.6s ease-in-out infinite;
+}
+
+@keyframes pulse-dot {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.55; transform: scale(0.78); }
 }
 
 .product-hero h1 {
@@ -504,9 +521,77 @@ button {
 }
 
 .product-form__submit {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
   width: 100%;
   margin-top: 24px;
   font-size: 1.2rem;
+  animation: atc-glow 2.6s ease-in-out infinite;
+}
+
+@keyframes atc-glow {
+  0%, 100% { box-shadow: 0 4px 18px rgba(39, 57, 133, 0.28); }
+  50% { box-shadow: 0 6px 32px rgba(39, 57, 133, 0.55); }
+}
+
+.urgency-strip {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  margin: 14px 0 0;
+  padding: 9px 14px;
+  border-radius: 6px;
+  background: #fff7ed;
+  border: 1px solid #fed7aa;
+  color: #c2410c;
+  font-size: 0.84rem;
+  font-weight: 800;
+}
+
+.urgency-strip svg {
+  flex-shrink: 0;
+}
+
+.guarantee-note {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  margin: 10px 0 0;
+  color: var(--color-muted);
+  font-size: 0.82rem;
+  font-weight: 700;
+}
+
+.guarantee-note svg {
+  color: #16a34a;
+  flex-shrink: 0;
+}
+
+.trust-row {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+  margin-top: 16px;
+  padding: 14px 4px 4px;
+  border-top: 1px solid var(--color-border);
+}
+
+.trust-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  text-align: center;
+  font-size: 0.74rem;
+  font-weight: 800;
+  color: var(--color-muted);
+}
+
+.trust-item svg {
+  color: var(--color-primary);
 }
 
 .form-message {
@@ -672,6 +757,22 @@ button {
   border-top: 1px solid #e3e3e6;
   padding-top: 12px;
   font-style: italic;
+}
+
+.verified-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  margin-bottom: 6px;
+  color: #16a34a;
+  font-size: 0.72rem;
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.verified-badge svg {
+  flex-shrink: 0;
 }
 
 .before-after {
@@ -1035,6 +1136,11 @@ button {
   background: rgba(255, 255, 255, 0.97);
   padding: 10px max(16px, calc((100vw - var(--page-width)) / 2));
   box-shadow: 0 -6px 24px rgba(16, 17, 20, 0.08);
+  transition: transform 240ms ease;
+}
+
+.sticky-atc.is-hidden {
+  transform: translateY(110%);
 }
 
 .sticky-atc > div {
@@ -1240,6 +1346,12 @@ button {
 
   .before-after {
     gap: 34px;
+  }
+}
+
+@media (max-width: 680px) {
+  .trust-item {
+    font-size: 0.67rem;
   }
 }
 

@@ -16,49 +16,56 @@
           "type": "gallery_image",
           "settings": {
             "image": "shopify://shop_images/Shophoto_1.png",
-            "alt": "Monster resin glow lamp front view"
+            "alt": "Godzilla resin glow lamp front view"
           }
         },
         "gallery_2": {
           "type": "gallery_image",
           "settings": {
             "image": "shopify://shop_images/photo_2nd_1.png",
-            "alt": "Monster resin glow lamp blue resin detail"
+            "alt": "Godzilla resin lamp blue glow detail"
           }
         },
         "gallery_3": {
           "type": "gallery_image",
           "settings": {
             "image": "shopify://shop_images/shopphoto_3_1.png",
-            "alt": "Monster resin glow lamp handmade scene"
+            "alt": "Godzilla resin lamp handmade close-up"
           }
         },
         "gallery_4": {
           "type": "gallery_image",
           "settings": {
             "image": "shopify://shop_images/shopphoto_4.png",
-            "alt": "Monster resin glow lamp on desk"
+            "alt": "Godzilla resin lamp glowing on desk at night"
           }
         },
         "bullet_1": {
           "type": "bullet",
           "settings": {
-            "icon": "!",
-            "text": "Handmade resin display piece"
+            "icon": "✓",
+            "text": "Hand-poured resin Godzilla sculpture — each one unique"
           }
         },
         "bullet_2": {
           "type": "bullet",
           "settings": {
-            "icon": "+",
-            "text": "Glows like a cozy movie scene"
+            "icon": "✓",
+            "text": "Electric blue LED glow transforms any room at night"
           }
         },
         "bullet_3": {
           "type": "bullet",
           "settings": {
-            "icon": "#",
-            "text": "A gift collectors will remember"
+            "icon": "✓",
+            "text": "The collector's gift Kaiju fans never knew they needed"
+          }
+        },
+        "bullet_4": {
+          "type": "bullet",
+          "settings": {
+            "icon": "✓",
+            "text": "Includes power cord — plug in and enjoy immediately"
           }
         }
       },
@@ -69,32 +76,38 @@
         "gallery_4",
         "bullet_1",
         "bullet_2",
-        "bullet_3"
+        "bullet_3",
+        "bullet_4"
       ],
       "custom_css": [
         ".product-hero img {max-width: 100%; width: auto; height: auto; object-fit: contain;}"
       ],
       "settings": {
         "featured_product": "",
-        "product_title": "Lily's Art | Monster Resin Glow Lamp",
-        "stock_badge": "Hot Product | Low Stock",
-        "orders_text": "90+ orders in the last 24h",
-        "review_text": "4.9/5.0 (40+ Verified Reviews)",
+        "product_title": "Lily's Art | Godzilla Resin Glow Lamp",
+        "stock_badge": "Low Stock — Only 7 Left",
+        "orders_text": "127+ happy customers this week",
+        "review_text": "4.9/5.0 (60+ Verified Reviews)",
         "price_text": "$89.95",
         "compare_text": "$129.95",
         "save_badge": "SAVE 30%",
-        "variant_label": "Sizes",
+        "variant_label": "Size",
         "size_small": "Small",
         "size_large": "Large",
         "bundle_heading": "BUNDLE & SAVE",
         "bundle_1_label": "Buy 1",
         "bundle_1_price": "$89.95",
         "bundle_1_compare": "$129.95",
-        "bundle_2_label": "Buy 2",
-        "bundle_2_badge": "Best Gift Deal",
+        "bundle_2_label": "Buy 2 — Gift Set",
+        "bundle_2_badge": "Best Value",
         "bundle_2_price": "$161.91",
         "bundle_2_compare": "$259.90",
-        "add_to_cart_text": "ADD TO CART",
+        "urgency_text": "Hurry — only 7 left in stock at this price",
+        "guarantee_text": "30-Day Satisfaction Guarantee — hassle-free returns",
+        "trust_1": "30-Day Guarantee",
+        "trust_2": "Secure Checkout",
+        "trust_3": "Free Tracked Shipping",
+        "add_to_cart_text": "ADD TO CART — FREE SHIPPING",
         "timeline_ordered": "Ordered",
         "timeline_prepared": "Handmade & Prepared",
         "timeline_delivered": "Delivered",
@@ -108,9 +121,9 @@
           "type": "testimonial",
           "settings": {
             "image": "shopify://shop_images/Review_1.png",
-            "image_alt": "Customer resin lamp photo",
-            "title": "Perfect gift",
-            "quote": "Got this as a gift and it instantly became the coziest piece on the desk. The blue glow and handmade resin details make it feel personal and premium.",
+            "image_alt": "Customer Godzilla lamp photo",
+            "title": "Best Kaiju piece I own",
+            "quote": "I'm a huge Godzilla fan and this absolutely blew me away. The resin depth is incredible and the electric blue glow at night looks exactly like the atomic breath. It's the centrepiece of my entire collection now.",
             "author": "Emily K."
           }
         },
@@ -118,9 +131,9 @@
           "type": "testimonial",
           "settings": {
             "image": "shopify://shop_images/review_2.png",
-            "image_alt": "Customer resin lamp photo",
-            "title": "A real centerpiece",
-            "quote": "I bought it for my son and he lit up the second he saw it. The blue glow looks incredible at night and feels much more special than a normal lamp.",
+            "image_alt": "Customer Godzilla lamp photo",
+            "title": "My son lost his mind",
+            "quote": "Bought this for my son's birthday and he genuinely couldn't believe it was real. The blue glow at night is so atmospheric — it transforms his whole desk into a movie scene. Worth every penny.",
             "author": "Jason M."
           }
         },
@@ -128,9 +141,9 @@
           "type": "testimonial",
           "settings": {
             "image": "shopify://shop_images/review_3.png",
-            "image_alt": "Customer resin lamp photo",
-            "title": "Really surprised me",
-            "quote": "It looks way cooler in person than expected. The glow gives the whole room a different feel, and everyone asks where it came from.",
+            "image_alt": "Customer Godzilla lamp photo",
+            "title": "Everyone asks where I got it",
+            "quote": "It looks way better in person than the photos. The glow gives the whole room a completely different vibe and every single person who comes over asks where I got it. Already ordering a second one.",
             "author": "Marcus D."
           }
         }
@@ -144,20 +157,20 @@
         ".product-hero img {max-width: 100%; width: auto; height: auto; object-fit: contain;}"
       ],
       "settings": {
-        "heading": "Testimonials"
+        "heading": "What Godzilla Fans Are Saying"
       }
     },
     "before_after": {
       "type": "before-after",
       "settings": {
         "heading": "From Desk Decor to Movie Scene",
-        "text": "Slide to see the difference. By day, it is a detailed handmade resin display. At night, the blue glow turns it into a dramatic monster resin scene for your room.",
-        "before_label": "Before",
+        "text": "Slide to reveal the Godzilla glow in action. During the day, a striking handmade resin sculpture with incredible depth. Flip the switch at night and the electric blue glow brings your monster to life — straight out of the movies.",
+        "before_label": "Day",
         "before_image": "shopify://shop_images/day.png",
-        "before_alt": "Resin lamp in daylight",
-        "after_label": "After",
+        "before_alt": "Godzilla resin lamp in daylight",
+        "after_label": "Night",
         "after_image": "shopify://shop_images/night.png",
-        "after_alt": "Resin lamp glowing at night"
+        "after_alt": "Godzilla resin lamp glowing blue at night"
       }
     },
     "faq": {
@@ -167,28 +180,28 @@
           "type": "faq",
           "settings": {
             "question": "How are the lamps made?",
-            "answer": "<p>Each lamp is individually hand-poured with resin, layered decorative details, and a built-in light source. Small variations are expected and make every piece unique.</p>"
+            "answer": "<p>Each lamp is individually hand-poured using high-quality resin, with layered colours and decorative details built up one pour at a time. A built-in light source is embedded during the process. Because every lamp is made by hand, small variations in colour and texture are completely normal — they're what makes your piece one-of-a-kind.</p>"
           }
         },
         "faq_2": {
           "type": "faq",
           "settings": {
-            "question": "Do the lamps produce an animated effect like the videos?",
-            "answer": "<p>The lamp creates a bright blue glow and layered scene depth. Video lighting and camera exposure can make the glow appear more dramatic, so real-life brightness may vary by room.</p>"
+            "question": "Will it glow exactly like the videos?",
+            "answer": "<p>The lamp produces a rich, atmospheric electric blue glow that creates beautiful depth through the resin layers. Some product videos use professional lighting and camera settings that enhance the glow. In real life the effect is genuinely impressive — especially in a darkened room — though it won't animate. What you see in photos is a very close match to what you'll receive.</p>"
           }
         },
         "faq_3": {
           "type": "faq",
           "settings": {
             "question": "Does it come with a power cord and light?",
-            "answer": "<p>Yes. The lamp includes the installed light component and a compatible power cord unless your product listing states otherwise.</p>"
+            "answer": "<p>Yes — your lamp arrives fully equipped. The LED light is installed and a compatible USB power cord is included. Just plug it in and it's ready to glow. No extra purchases needed.</p>"
           }
         },
         "faq_4": {
           "type": "faq",
           "settings": {
-            "question": "Returns & guarantees",
-            "answer": "<p>If your lamp arrives damaged, contact us with photos within 7 days of delivery. We will help with a replacement or return based on store policy.</p>"
+            "question": "What's your return and guarantee policy?",
+            "answer": "<p>We back every lamp with a <strong>30-Day Satisfaction Guarantee</strong>. If your lamp arrives damaged, defective, or you're unhappy with it for any reason, contact us within 30 days of delivery with a photo and we'll sort it out with a replacement or full refund — no hassle.</p>"
           }
         }
       },
@@ -199,7 +212,7 @@
         "faq_4"
       ],
       "settings": {
-        "heading": "FAQ"
+        "heading": "Common Questions"
       }
     }
   },
