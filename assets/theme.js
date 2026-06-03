@@ -109,7 +109,7 @@
   }
 
   async function changeCartItem(key, quantity) {
-    const response = await fetchfetch('/cart.js')', {
+    const response = await fetch('/cart/change.js', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -317,6 +317,21 @@
     });
   }
 
+  function initStickyAtc() {
+    const bar = document.querySelector('[data-sticky-atc]');
+    const submit = document.querySelector('[data-add-to-cart]');
+    if (!bar || !submit) return;
+
+    function update() {
+      const rect = submit.getBoundingClientRect();
+      const inView = rect.top >= 0 && rect.bottom <= window.innerHeight;
+      bar.classList.toggle('is-hidden', inView);
+    }
+
+    window.addEventListener('scroll', update, { passive: true });
+    update();
+  }
+
   function init(scope) {
     initGallery(scope);
     initProductForms(scope);
@@ -328,6 +343,7 @@
   document.addEventListener('DOMContentLoaded', () => {
     init(document);
     initDelegatedCartEvents();
+    initStickyAtc();
   });
 
   document.addEventListener('shopify:section:load', (event) => {
