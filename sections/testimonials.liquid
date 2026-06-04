@@ -4,15 +4,15 @@
   {%- if section.settings.show_stats -%}
   <div class="stats-grid">
     <div class="stat-card">
-      <b data-count="{{ section.settings.stat_1_value }}">0+</b>
+      <b data-count="{{ section.settings.stat_1_value }}" data-suffix="{{ section.settings.stat_1_suffix }}">0{{ section.settings.stat_1_suffix }}</b>
       <small>{{ section.settings.stat_1_label }}</small>
     </div>
     <div class="stat-card">
-      <b data-count="{{ section.settings.stat_2_value }}">0+</b>
+      <b data-count="{{ section.settings.stat_2_value }}" data-suffix="{{ section.settings.stat_2_suffix }}">0{{ section.settings.stat_2_suffix }}</b>
       <small>{{ section.settings.stat_2_label }}</small>
     </div>
     <div class="stat-card">
-      <b data-count="{{ section.settings.stat_3_value }}">0+</b>
+      <b data-count="{{ section.settings.stat_3_value }}" data-suffix="{{ section.settings.stat_3_suffix }}">0{{ section.settings.stat_3_suffix }}</b>
       <small>{{ section.settings.stat_3_label }}</small>
     </div>
     <div class="stat-card">
@@ -78,6 +78,12 @@
     },
     {
       "type": "text",
+      "id": "stat_1_suffix",
+      "label": "Stat 1 — suffix",
+      "default": "+"
+    },
+    {
+      "type": "text",
       "id": "stat_2_value",
       "label": "Stat 2 — number",
       "default": "127"
@@ -90,6 +96,12 @@
     },
     {
       "type": "text",
+      "id": "stat_2_suffix",
+      "label": "Stat 2 — suffix",
+      "default": "+"
+    },
+    {
+      "type": "text",
       "id": "stat_3_value",
       "label": "Stat 3 — number",
       "default": "100"
@@ -98,7 +110,13 @@
       "type": "text",
       "id": "stat_3_label",
       "label": "Stat 3 — label",
-      "default": "% Satisfaction Rate"
+      "default": "Satisfaction Rate"
+    },
+    {
+      "type": "text",
+      "id": "stat_3_suffix",
+      "label": "Stat 3 — suffix",
+      "default": "%"
     },
     {
       "type": "text",

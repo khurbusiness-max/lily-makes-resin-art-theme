@@ -100,6 +100,7 @@
         "bundle_2_badge": "Most Popular",
         "bundle_2_price": "$179.95",
         "bundle_2_compare": "$229.95",
+        "bundle_3_compare": "$299.95",
         "urgency_text": "Hurry — only 5 left in stock at this price",
         "guarantee_text": "30-Day Satisfaction Guarantee — hassle-free returns",
         "add_to_cart_text": "ADD TO CART — FREE SHIPPING",
@@ -219,10 +220,13 @@
         "show_stats": true,
         "stat_1_value": "45",
         "stat_1_label": "Verified Reviews",
+        "stat_1_suffix": "+",
         "stat_2_value": "89",
         "stat_2_label": "Happy Customers This Week",
+        "stat_2_suffix": "+",
         "stat_3_value": "100",
-        "stat_3_label": "% Satisfaction Rate",
+        "stat_3_label": "Satisfaction Rate",
+        "stat_3_suffix": "%",
         "stat_4_value": "30-Day",
         "stat_4_label": "Money-Back Guarantee"
       }
