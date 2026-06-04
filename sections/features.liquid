@@ -1,0 +1,114 @@
+<section class="features-section page-width rv">
+  <h2 class="features-section__heading">{{ section.settings.heading }}</h2>
+  <p class="features-section__sub">{{ section.settings.subheading }}</p>
+  <div class="features-grid">
+    {%- for block in section.blocks -%}
+      <div class="feature-card rv" {{ block.shopify_attributes }}>
+        <div class="feature-card__icon">{{ block.settings.icon }}</div>
+        <h3>{{ block.settings.title }}</h3>
+        <p>{{ block.settings.text }}</p>
+      </div>
+    {%- endfor -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Features",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Built to Be Stared At"
+    },
+    {
+      "type": "text",
+      "id": "subheading",
+      "label": "Subheading",
+      "default": "Every detail of this lamp was designed to make jaws drop."
+    }
+  ],
+  "blocks": [
+    {
+      "type": "feature",
+      "name": "Feature Card",
+      "settings": [
+        {
+          "type": "text",
+          "id": "icon",
+          "label": "Emoji Icon",
+          "default": "✨"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title",
+          "default": "Real Glow, Not a Sticker"
+        },
+        {
+          "type": "textarea",
+          "id": "text",
+          "label": "Description",
+          "default": "The LED is embedded inside the resin itself, creating depth you can't fake with a print or decal."
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Features",
+      "blocks": [
+        {
+          "type": "feature",
+          "settings": {
+            "icon": "💡",
+            "title": "Real Glow, Not a Sticker",
+            "text": "The LED is embedded inside the resin itself, creating depth and atmosphere you simply cannot fake."
+          }
+        },
+        {
+          "type": "feature",
+          "settings": {
+            "icon": "🎨",
+            "title": "Every One is Unique",
+            "text": "Hand-poured one at a time — no two lamps are identical. Yours is a genuine one-of-a-kind piece."
+          }
+        },
+        {
+          "type": "feature",
+          "settings": {
+            "icon": "🔌",
+            "title": "Plug & Display Ready",
+            "text": "USB power cord included. Unbox, plug in, and it glows. Zero assembly, zero extra purchases."
+          }
+        },
+        {
+          "type": "feature",
+          "settings": {
+            "icon": "🎁",
+            "title": "The Gift They'll Never Forget",
+            "text": "Kaiju fan or not — nobody expects a hand-crafted glowing sculpture. It lands every single time."
+          }
+        },
+        {
+          "type": "feature",
+          "settings": {
+            "icon": "🪨",
+            "title": "Solid & Built to Last",
+            "text": "Premium resin means no fading, no chipping. It will look stunning on a shelf for years."
+          }
+        },
+        {
+          "type": "feature",
+          "settings": {
+            "icon": "🛡️",
+            "title": "30-Day Risk-Free Guarantee",
+            "text": "Not in love with it? Contact us within 30 days for a full refund — no drama, no questions."
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

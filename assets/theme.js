@@ -332,6 +332,99 @@
     update();
   }
 
+  function initCountdown() {
+    const el = document.querySelector('[data-countdown]');
+    if (!el) return;
+    const hEl = el.querySelector('[data-cd-h]');
+    const mEl = el.querySelector('[data-cd-m]');
+    const sEl = el.querySelector('[data-cd-s]');
+    if (!hEl || !mEl || !sEl) return;
+
+    let total = 2 * 3600 + 59 * 60 + 59;
+
+    function tick() {
+      if (total <= 0) return;
+      total--;
+      const h = Math.floor(total / 3600);
+      const m = Math.floor((total % 3600) / 60);
+      const s = total % 60;
+      hEl.textContent = String(h).padStart(2, '0');
+      mEl.textContent = String(m).padStart(2, '0');
+      sEl.textContent = String(s).padStart(2, '0');
+    }
+
+    setInterval(tick, 1000);
+  }
+
+  function initSocialToast() {
+    const toast = document.getElementById('social-toast');
+    if (!toast) return;
+
+    const names = ['Sarah M.', 'Jake R.', 'Emma L.', 'Chris T.', 'Mia S.', 'Tom H.', 'Lily B.', 'Ryan K.'];
+    const locs = ['Auckland, NZ', 'London, UK', 'Sydney, AU', 'Toronto, CA', 'Los Angeles, US', 'Dublin, IE', 'Melbourne, AU', 'New York, US'];
+    const nameEl = toast.querySelector('[data-toast-name]');
+    const locEl = toast.querySelector('[data-toast-loc]');
+
+    function show() {
+      const name = names[Math.floor(Math.random() * names.length)];
+      const loc = locs[Math.floor(Math.random() * locs.length)];
+      if (nameEl) nameEl.textContent = name;
+      if (locEl) locEl.textContent = 'from ' + loc + ' just bought the Godzilla Lamp';
+      toast.classList.add('is-visible');
+      setTimeout(() => toast.classList.remove('is-visible'), 4000);
+    }
+
+    setTimeout(() => {
+      show();
+      setInterval(show, 18000);
+    }, 6000);
+  }
+
+  function initScrollReveal() {
+    const nodes = document.querySelectorAll('.rv');
+    if (!nodes.length) return;
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('in');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.12 });
+
+    nodes.forEach((node) => observer.observe(node));
+  }
+
+  function initCountUp() {
+    const cards = document.querySelectorAll('[data-count]');
+    if (!cards.length) return;
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (!entry.isIntersecting) return;
+        const el = entry.target;
+        const target = parseInt(el.getAttribute('data-count'), 10);
+        const suffix = el.getAttribute('data-count-suffix') || '+';
+        const duration = 1200;
+        const start = performance.now();
+
+        function step(now) {
+          const elapsed = now - start;
+          const progress = Math.min(elapsed / duration, 1);
+          const eased = 1 - Math.pow(1 - progress, 3);
+          el.textContent = Math.round(eased * target) + suffix;
+          if (progress < 1) requestAnimationFrame(step);
+        }
+
+        requestAnimationFrame(step);
+        observer.unobserve(el);
+      });
+    }, { threshold: 0.5 });
+
+    cards.forEach((card) => observer.observe(card));
+  }
+
   function init(scope) {
     initGallery(scope);
     initProductForms(scope);
@@ -344,6 +437,10 @@
     init(document);
     initDelegatedCartEvents();
     initStickyAtc();
+    initCountdown();
+    initSocialToast();
+    initScrollReveal();
+    initCountUp();
   });
 
   document.addEventListener('shopify:section:load', (event) => {
