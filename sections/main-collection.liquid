@@ -1,79 +1,101 @@
+<!-- Collection Hero -->
+<div class="collection-hero">
+  <div class="page-width collection-hero__inner">
+    <p class="eyebrow-pill">
+      <span class="live-dot" aria-hidden="true"></span>
+      {{ section.settings.eyebrow }}
+    </p>
+    <h1>{{ section.settings.heading }}</h1>
+    <p class="collection-hero__sub">{{ section.settings.subheading }}</p>
+  </div>
+</div>
+
+<!-- Collection Grid -->
 <section class="collection-main page-width">
-  <h1>{{ section.settings.heading }}</h1>
 
   <div class="collection-toolbar">
-    <div class="collection-filters" aria-label="Product filters">
-      <span>Filter:</span>
-      {%- if collection.filters.size > 0 -%}
-        {%- for filter in collection.filters -%}
-          {%- if filter.label == 'Availability' or filter.label == 'Price' -%}
-            <details class="filter-menu">
-              <summary>{{ filter.label }}</summary>
-              <div class="filter-menu__content">
-                {%- case filter.type -%}
-                  {%- when 'price_range' -%}
-                    <label>Min <input name="{{ filter.min_value.param_name }}" type="number" min="0" placeholder="0"></label>
-                    <label>Max <input name="{{ filter.max_value.param_name }}" type="number" min="0" placeholder="{{ filter.range_max | money_without_currency }}"></label>
-                  {%- else -%}
-                    {%- for value in filter.values -%}
-                      <label><input type="checkbox" name="{{ value.param_name }}" value="{{ value.value }}"> {{ value.label }}</label>
-                    {%- endfor -%}
-                {%- endcase -%}
-              </div>
-            </details>
-          {%- endif -%}
-        {%- endfor -%}
-      {%- else -%}
-        <details class="filter-menu"><summary>Availability</summary><div class="filter-menu__content"><label><input type="checkbox"> In stock</label></div></details>
-        <details class="filter-menu"><summary>Price</summary><div class="filter-menu__content"><label>Min <input type="number" min="0"></label><label>Max <input type="number" min="0"></label></div></details>
-      {%- endif -%}
-    </div>
-
+    <span class="collection-toolbar__count">
+      {{ collection.products_count | default: 2 }}
+      {%- if collection.products_count == 1 %} product{%- else %} products{%- endif %}
+    </span>
     <form class="sort-form">
-      <label for="SortBy">Sort by:</label>
+      <label for="SortBy" class="visually-hidden">Sort by</label>
       <select id="SortBy" name="sort_by" data-sort-by>
         {%- assign sort_by = collection.sort_by | default: collection.default_sort_by -%}
         {%- for option in collection.sort_options -%}
           <option value="{{ option.value }}" {% if option.value == sort_by %}selected{% endif %}>{{ option.name }}</option>
         {%- endfor -%}
+        {%- if collection.sort_options.size == 0 -%}
+          <option value="manual" selected>Featured</option>
+          <option value="price-ascending">Price: Low to High</option>
+          <option value="price-descending">Price: High to Low</option>
+          <option value="created-descending">Newest</option>
+        {%- endif -%}
       </select>
-      <span>{{ collection.products_count | default: 1 }} product</span>
     </form>
   </div>
 
   <div class="product-grid">
     {%- if collection.products.size > 0 -%}
       {%- for product in collection.products limit: section.settings.products_to_show -%}
-        {% render 'product-card', product: product, section: section %}
+        {% render 'product-card', product: product %}
       {%- endfor -%}
     {%- elsif section.settings.fallback_product != blank -%}
-      {% render 'product-card', product: section.settings.fallback_product, section: section %}
+      {% render 'product-card',
+        product: section.settings.fallback_product,
+        fallback_badge: section.settings.fallback_1_badge,
+        fallback_reviews: section.settings.fallback_1_reviews
+      %}
+      {%- if section.settings.fallback_product_2 != blank -%}
+        {% render 'product-card',
+          product: section.settings.fallback_product_2,
+          fallback_badge: section.settings.fallback_2_badge,
+          fallback_reviews: section.settings.fallback_2_reviews
+        %}
+      {%- endif -%}
     {%- else -%}
-      {% render 'product-card', product: blank, section: section %}
+      {% render 'product-card',
+        fallback_title: section.settings.fallback_1_title,
+        fallback_price: section.settings.fallback_1_price,
+        fallback_compare: section.settings.fallback_1_compare,
+        fallback_badge: section.settings.fallback_1_badge,
+        fallback_reviews: section.settings.fallback_1_reviews,
+        fallback_image: section.settings.fallback_1_image
+      %}
+      {% render 'product-card',
+        fallback_title: section.settings.fallback_2_title,
+        fallback_price: section.settings.fallback_2_price,
+        fallback_compare: section.settings.fallback_2_compare,
+        fallback_badge: section.settings.fallback_2_badge,
+        fallback_reviews: section.settings.fallback_2_reviews,
+        fallback_image: section.settings.fallback_2_image
+      %}
     {%- endif -%}
   </div>
 </section>
 
 {% schema %}
 {
-  "name": "Main collection",
+  "name": "Collection page",
   "settings": [
     {
       "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow pill text",
+      "default": "New drops every week"
+    },
+    {
+      "type": "text",
       "id": "heading",
-      "label": "Heading",
-      "default": "Products"
+      "label": "Page heading",
+      "default": "Shop All Lamps"
     },
     {
-      "type": "product",
-      "id": "fallback_product",
-      "label": "Fallback product"
+      "type": "text",
+      "id": "subheading",
+      "label": "Subheading",
+      "default": "Every lamp hand-poured by Lily — one at a time, never mass-produced."
     },
-    {
-  "type": "image_picker",
-  "id": "catalog_image",
-  "label": "Catalog card image"
-},
     {
       "type": "range",
       "id": "products_to_show",
@@ -81,37 +103,95 @@
       "min": 1,
       "max": 12,
       "step": 1,
-      "default": 4
+      "default": 8
+    },
+    {
+      "type": "header",
+      "content": "Fallback product 1 (shown when no collection)"
+    },
+    {
+      "type": "product",
+      "id": "fallback_product",
+      "label": "Product 1"
     },
     {
       "type": "text",
-      "id": "fallback_title",
-      "label": "Fallback title",
-      "default": "Lily's Art | Monster Resin Glow Lamp"
+      "id": "fallback_1_title",
+      "label": "Product 1 fallback title",
+      "default": "Godzilla Resin Glow Lamp"
     },
     {
       "type": "text",
-      "id": "fallback_price",
-      "label": "Fallback price",
+      "id": "fallback_1_price",
+      "label": "Product 1 price",
       "default": "$89.95"
     },
     {
       "type": "text",
-      "id": "fallback_compare",
-      "label": "Fallback compare-at price",
+      "id": "fallback_1_compare",
+      "label": "Product 1 compare-at",
       "default": "$129.95"
     },
     {
       "type": "text",
-      "id": "discount_badge",
-      "label": "Discount badge",
-      "default": "SAVE 30%"
+      "id": "fallback_1_badge",
+      "label": "Product 1 badge",
+      "default": "Best Seller"
     },
     {
       "type": "text",
-      "id": "button_text",
-      "label": "Button text",
-      "default": "Go to product"
+      "id": "fallback_1_reviews",
+      "label": "Product 1 review count",
+      "default": "60+ reviews"
+    },
+    {
+      "type": "image_picker",
+      "id": "fallback_1_image",
+      "label": "Product 1 image"
+    },
+    {
+      "type": "header",
+      "content": "Fallback product 2"
+    },
+    {
+      "type": "product",
+      "id": "fallback_product_2",
+      "label": "Product 2"
+    },
+    {
+      "type": "text",
+      "id": "fallback_2_title",
+      "label": "Product 2 fallback title",
+      "default": "How to Train Your Dragon Resin Lamp"
+    },
+    {
+      "type": "text",
+      "id": "fallback_2_price",
+      "label": "Product 2 price",
+      "default": "$89.95"
+    },
+    {
+      "type": "text",
+      "id": "fallback_2_compare",
+      "label": "Product 2 compare-at",
+      "default": "$119.95"
+    },
+    {
+      "type": "text",
+      "id": "fallback_2_badge",
+      "label": "Product 2 badge",
+      "default": "New Arrival"
+    },
+    {
+      "type": "text",
+      "id": "fallback_2_reviews",
+      "label": "Product 2 review count",
+      "default": "45+ reviews"
+    },
+    {
+      "type": "image_picker",
+      "id": "fallback_2_image",
+      "label": "Product 2 image"
     }
   ]
 }

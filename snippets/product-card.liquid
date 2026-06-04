@@ -1,39 +1,65 @@
 {%- liquid
-  assign card_title = section.settings.fallback_title
-  assign card_price = section.settings.fallback_price
-  assign card_compare = section.settings.fallback_compare
+  assign card_title = fallback_title | default: 'Lily's Art Resin Lamp'
+  assign card_price = fallback_price | default: '$89.95'
+  assign card_compare = fallback_compare | default: '$129.95'
+  assign card_badge = fallback_badge | default: 'Best Seller'
+  assign card_reviews = fallback_reviews | default: '60+ reviews'
   assign card_url = routes.root_url
-  assign card_image = blank
-  assign catalog_image = section.settings.catalog_image
+  assign card_image = fallback_image
 
   if product != blank
     assign card_title = product.title
     assign card_price = product.price | money
-    if product.compare_at_price > product.price
-      assign card_compare = product.compare_at_price | money
-    endif
     assign card_url = product.url
     assign card_image = product.featured_image
-  endif
-
-  if catalog_image != blank
-    assign card_image = catalog_image
+    if product.compare_at_price > product.price
+      assign card_compare = product.compare_at_price | money
+      assign raw_save = product.compare_at_price | minus: product.price
+      assign save_pct = raw_save | times: 100 | divided_by: product.compare_at_price
+    endif
   endif
 -%}
 
-<article class="product-card">
-  <a class="product-card__image" href="{{ card_url }}" aria-label="{{ card_title | escape }}">
+<article class="product-card rv">
+  <a class="product-card__media" href="{{ card_url }}" tabindex="-1" aria-hidden="true">
     {%- if card_image != blank -%}
-      <img src="{{ card_image | image_url: width: 700 }}" alt="{{ card_image.alt | default: card_title | escape }}" width="700" height="700" loading="lazy">
+      <img
+        src="{{ card_image | image_url: width: 800 }}"
+        alt="{{ card_image.alt | default: card_title | escape }}"
+        width="800" height="800"
+        loading="lazy">
     {%- else -%}
-      <img src="{{ 'lmra-product-main.svg' | asset_url }}" alt="{{ card_title | escape }}" width="700" height="700" loading="lazy">
+      <svg viewBox="0 0 800 800" aria-hidden="true" width="800" height="800">
+        <rect width="800" height="800" fill="#fce4ef"/>
+        <circle cx="400" cy="360" r="130" fill="#f9a8d4"/>
+        <circle cx="400" cy="360" r="70" fill="#d63384"/>
+      </svg>
     {%- endif -%}
-    <span>{{ section.settings.discount_badge }}</span>
+
+    <div class="product-card__badges">
+      {%- if card_badge != blank -%}
+        <span class="product-card__badge">{{ card_badge }}</span>
+      {%- endif -%}
+      {%- if save_pct > 0 -%}
+        <span class="product-card__save">SAVE {{ save_pct }}%</span>
+      {%- elsif card_compare != blank -%}
+        <span class="product-card__save">SALE</span>
+      {%- endif -%}
+    </div>
   </a>
 
   <div class="product-card__body">
+    <div class="product-card__meta">
+      <span class="product-card__stars" aria-label="4.9 out of 5 stars">★★★★★</span>
+      <span class="product-card__reviews">{{ card_reviews }}</span>
+    </div>
     <h2><a href="{{ card_url }}">{{ card_title }}</a></h2>
-    <p><strong>From {{ card_price }}</strong> <s>{{ card_compare }}</s></p>
-    <a class="button button--primary" href="{{ card_url }}">{{ section.settings.button_text }}</a>
+    <p class="product-card__price">
+      <strong>From {{ card_price }}</strong>
+      {%- if card_compare != blank -%}
+        <s>{{ card_compare }}</s>
+      {%- endif -%}
+    </p>
+    <a class="button button--primary product-card__cta" href="{{ card_url }}">Shop Now</a>
   </div>
 </article>
