@@ -177,10 +177,13 @@
               {%- for variant in featured_product.variants -%}
                 {%- if variant.price == min_price -%}
                   {%- assign size_word = 'Small' -%}
+                  {%- assign fallback_compare = section.settings.bundle_1_compare -%}
                 {%- elsif variant.price == max_price -%}
                   {%- assign size_word = 'Extra Large' -%}
+                  {%- assign fallback_compare = section.settings.bundle_3_compare -%}
                 {%- else -%}
                   {%- assign size_word = 'Large' -%}
+                  {%- assign fallback_compare = section.settings.bundle_2_compare -%}
                 {%- endif -%}
                 <label class="bundle-card{% if variant.id == selected_variant.id %} is-active{% endif %}">
                   <input type="radio" name="bundle"
@@ -194,7 +197,11 @@
                   </span>
                   <span class="bundle-card__price">
                     <strong>{{ variant.price | money }}</strong>
-                    {%- if variant.compare_at_price > variant.price -%}<s>{{ variant.compare_at_price | money }}</s>{%- endif -%}
+                    {%- if variant.compare_at_price > variant.price -%}
+                      <s>{{ variant.compare_at_price | money }}</s>
+                    {%- elsif fallback_compare != blank -%}
+                      <s>{{ fallback_compare }}</s>
+                    {%- endif -%}
                   </span>
                 </label>
               {%- endfor -%}
@@ -341,6 +348,7 @@
     { "type": "text", "id": "bundle_2_badge", "label": "Bundle 2 badge", "default": "Best Value" },
     { "type": "text", "id": "bundle_2_price", "label": "Bundle 2 price", "default": "$161.91" },
     { "type": "text", "id": "bundle_2_compare", "label": "Bundle 2 compare-at price", "default": "$259.90" },
+    { "type": "text", "id": "bundle_3_compare", "label": "Bundle 3 (Extra Large) compare-at price", "default": "" },
     { "type": "text", "id": "urgency_text", "label": "Urgency message", "default": "Hurry — only 7 left in stock at this price" },
     { "type": "text", "id": "guarantee_text", "label": "Guarantee note", "default": "30-Day Satisfaction Guarantee — hassle-free returns" },
     { "type": "text", "id": "add_to_cart_text", "label": "Add to cart button", "default": "ADD TO CART — FREE SHIPPING" },
