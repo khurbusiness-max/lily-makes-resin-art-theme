@@ -1,0 +1,305 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "product_hero": {
+      "type": "product-hero",
+      "blocks": {
+        "gallery_1": {
+          "type": "gallery_image",
+          "settings": {
+            "image": "",
+            "alt": "How to Train Your Dragon resin lamp glowing blue"
+          }
+        },
+        "gallery_2": {
+          "type": "gallery_image",
+          "settings": {
+            "image": "",
+            "alt": "Lily hand-pouring the Dragon resin lamp"
+          }
+        },
+        "gallery_3": {
+          "type": "gallery_image",
+          "settings": {
+            "image": "",
+            "alt": "Dragon lamp close-up — Toothless and Light Fury detail"
+          }
+        },
+        "gallery_4": {
+          "type": "gallery_image",
+          "settings": {
+            "image": "",
+            "alt": "Dragon lamp glowing on a desk at night"
+          }
+        },
+        "bullet_1": {
+          "type": "bullet",
+          "settings": {
+            "icon": "✓",
+            "text": "Toothless & Light Fury hand-sculpted in premium resin — every piece unique"
+          }
+        },
+        "bullet_2": {
+          "type": "bullet",
+          "settings": {
+            "icon": "✓",
+            "text": "Ethereal blue LED glow transforms any room into the Hidden World at night"
+          }
+        },
+        "bullet_3": {
+          "type": "bullet",
+          "settings": {
+            "icon": "✓",
+            "text": "3 sizes available — from a desk accent to a stunning display centrepiece"
+          }
+        },
+        "bullet_4": {
+          "type": "bullet",
+          "settings": {
+            "icon": "✓",
+            "text": "Includes USB power cord — unbox, plug in, and the magic begins immediately"
+          }
+        }
+      },
+      "block_order": [
+        "gallery_1",
+        "gallery_2",
+        "gallery_3",
+        "gallery_4",
+        "bullet_1",
+        "bullet_2",
+        "bullet_3",
+        "bullet_4"
+      ],
+      "settings": {
+        "featured_product": "",
+        "product_title": "Lily's Art | How to Train Your Dragon Resin Lamp",
+        "product_lead": "Toothless and the Light Fury, frozen in time inside hand-poured resin. An ethereal blue glow lights the hidden world from within — not printed on, not stuck on. Real depth, real magic.",
+        "stock_badge": "Popular — Only 5 Left in Stock",
+        "orders_text": "89+ dragon fans ordered this week",
+        "live_text": "38 people viewing right now",
+        "review_text": "4.9/5.0 (45+ Verified Reviews)",
+        "price_text": "$89.95",
+        "compare_text": "$119.95",
+        "save_badge": "SAVE 25%",
+        "variant_label": "Size",
+        "size_small": "Small (15×10cm)",
+        "size_large": "Large (25×15cm)",
+        "show_countdown": true,
+        "bundle_heading": "CHOOSE YOUR SIZE",
+        "bundle_1_label": "Small — 15×10cm (Desk Size)",
+        "bundle_1_price": "$89.95",
+        "bundle_1_compare": "$119.95",
+        "bundle_2_label": "Large — 25×15cm (Statement Piece)",
+        "bundle_2_badge": "Most Popular",
+        "bundle_2_price": "$179.95",
+        "bundle_2_compare": "$229.95",
+        "urgency_text": "Hurry — only 5 left in stock at this price",
+        "guarantee_text": "30-Day Satisfaction Guarantee — hassle-free returns",
+        "trust_1": "30-Day Guarantee",
+        "trust_2": "Secure Checkout",
+        "trust_3": "Free Tracked Shipping",
+        "add_to_cart_text": "ADD TO CART — FREE SHIPPING",
+        "timeline_ordered": "Ordered",
+        "timeline_prepared": "Handmade & Prepared",
+        "timeline_delivered": "Delivered",
+        "show_sticky_bar": true
+      }
+    },
+    "features": {
+      "type": "features",
+      "blocks": {
+        "feature_1": {
+          "type": "feature",
+          "settings": {
+            "icon": "💡",
+            "title": "Real Glow, Not a Print",
+            "text": "The LED is embedded inside the resin — the blue light shines through the actual sculpture, not a sticker or decal."
+          }
+        },
+        "feature_2": {
+          "type": "feature",
+          "settings": {
+            "icon": "🐉",
+            "title": "Two Dragons, One Masterpiece",
+            "text": "Toothless and the Light Fury together in one hand-crafted scene — the reunion fans never stop talking about."
+          }
+        },
+        "feature_3": {
+          "type": "feature",
+          "settings": {
+            "icon": "📐",
+            "title": "Three Sizes, One Perfect Fit",
+            "text": "15×10cm for a desk accent, 20×12.5cm for a shelf statement, 25×15cm for the showstopper centrepiece."
+          }
+        },
+        "feature_4": {
+          "type": "feature",
+          "settings": {
+            "icon": "🔌",
+            "title": "Plug & Glow Ready",
+            "text": "USB power cord included. Unbox, plug in, and the hidden world glows. Zero assembly, zero extra purchases."
+          }
+        },
+        "feature_5": {
+          "type": "feature",
+          "settings": {
+            "icon": "🪨",
+            "title": "Built to Last Forever",
+            "text": "Premium resin never fades, chips, or yellows. It will look as magical on a shelf in 10 years as it does today."
+          }
+        },
+        "feature_6": {
+          "type": "feature",
+          "settings": {
+            "icon": "🛡️",
+            "title": "30-Day Risk-Free Guarantee",
+            "text": "Not completely in love with it? Contact us within 30 days for a full refund — no drama, no questions."
+          }
+        }
+      },
+      "block_order": [
+        "feature_1",
+        "feature_2",
+        "feature_3",
+        "feature_4",
+        "feature_5",
+        "feature_6"
+      ],
+      "settings": {
+        "heading": "Built to Make Fans Speechless",
+        "subheading": "Every detail of this lamp was crafted to capture the magic of the Hidden World."
+      }
+    },
+    "testimonials": {
+      "type": "testimonials",
+      "blocks": {
+        "testimonial_1": {
+          "type": "testimonial",
+          "settings": {
+            "image": "",
+            "image_alt": "Customer Dragon lamp photo",
+            "title": "My daughter burst into tears",
+            "quote": "She's obsessed with How to Train Your Dragon and I got her this for her birthday. The moment she saw it glowing blue on her desk she genuinely cried happy tears. Worth every single penny and then some.",
+            "author": "David L."
+          }
+        },
+        "testimonial_2": {
+          "type": "testimonial",
+          "settings": {
+            "image": "",
+            "image_alt": "Customer Dragon lamp photo",
+            "title": "The most magical thing I own",
+            "quote": "I put it on my bedside table and turn it on every night before sleep. The blue glow through the resin is absolutely stunning — Toothless and the Light Fury look alive inside it. I've never loved a lamp before.",
+            "author": "Sophie T."
+          }
+        },
+        "testimonial_3": {
+          "type": "testimonial",
+          "settings": {
+            "image": "",
+            "image_alt": "Customer Dragon lamp photo",
+            "title": "Every guest asks about it",
+            "quote": "It sits on my bookshelf and every single person who visits stops and asks what it is. The level of detail is unreal for something handmade. Already ordered the large size as a Christmas gift.",
+            "author": "Alexandra R."
+          }
+        }
+      },
+      "block_order": [
+        "testimonial_1",
+        "testimonial_2",
+        "testimonial_3"
+      ],
+      "settings": {
+        "heading": "What Dragon Fans Are Saying",
+        "show_stats": true,
+        "stat_1_value": "45",
+        "stat_1_label": "Verified Reviews",
+        "stat_2_value": "89",
+        "stat_2_label": "Happy Customers This Week",
+        "stat_3_value": "100",
+        "stat_3_label": "% Satisfaction Rate",
+        "stat_4_value": "30-Day",
+        "stat_4_label": "Money-Back Guarantee"
+      }
+    },
+    "before_after": {
+      "type": "before-after",
+      "settings": {
+        "heading": "Day Scene to Hidden World",
+        "text": "Slide to see the transformation. In daylight, a stunning hand-poured resin sculpture with incredible depth — two dragons, a midnight castle, a galaxy of stars. Switch the light on at night and the ethereal blue glow brings Toothless and the Light Fury to life.",
+        "before_label": "Day",
+        "before_image": "",
+        "before_alt": "Dragon resin lamp in daylight",
+        "after_label": "Night",
+        "after_image": "",
+        "after_alt": "Dragon resin lamp glowing blue at night"
+      }
+    },
+    "faq": {
+      "type": "faq",
+      "blocks": {
+        "faq_1": {
+          "type": "faq",
+          "settings": {
+            "question": "What sizes are available and what do they look like?",
+            "answer": "<p>The lamp comes in three sizes: <strong>Small (15×10cm)</strong> — perfect for a desk, bedside table, or shelf accent. <strong>Medium (20×12.5cm)</strong> — a proper statement piece with more detail visible. <strong>Large (25×15cm)</strong> — the full showstopper. The larger the size, the more detail and depth you see through the resin. All three have the same scene: Toothless, the Light Fury, the castle, and the galaxy background.</p>"
+          }
+        },
+        "faq_2": {
+          "type": "faq",
+          "settings": {
+            "question": "Will the glow look like the photos?",
+            "answer": "<p>The ethereal blue glow is embedded directly in the resin, so the light shines through the sculpture from the inside. Product photos are taken in a darkened room which brings out the full drama — in real life the effect is genuinely magical, especially at night. It's a very close match to what you see in the photos. The glow doesn't animate, but the depth and colour through the resin is stunning.</p>"
+          }
+        },
+        "faq_3": {
+          "type": "faq",
+          "settings": {
+            "question": "Does it come with everything I need?",
+            "answer": "<p>Yes — your lamp arrives fully ready to display. The LED is installed inside the resin and a USB power cord is included. Just plug it into any USB port or adapter and it glows instantly. No assembly, no extra purchases, no waiting.</p>"
+          }
+        },
+        "faq_4": {
+          "type": "faq",
+          "settings": {
+            "question": "Is this officially licensed by DreamWorks?",
+            "answer": "<p>This is an independent, fan-made handcrafted art piece created by Lily. It is not officially licensed by DreamWorks or any affiliated company. It is sold as an original resin art piece inspired by the franchise, made with love for fans of the films.</p>"
+          }
+        },
+        "faq_5": {
+          "type": "faq",
+          "settings": {
+            "question": "What is your return and guarantee policy?",
+            "answer": "<p>Every lamp is backed by a <strong>30-Day Satisfaction Guarantee</strong>. If your lamp arrives damaged, defective, or you're not happy with it for any reason, contact us within 30 days of delivery with a photo and we'll arrange a replacement or full refund — no hassle, no questions.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "faq_1",
+        "faq_2",
+        "faq_3",
+        "faq_4",
+        "faq_5"
+      ],
+      "settings": {
+        "heading": "Common Questions"
+      }
+    }
+  },
+  "order": [
+    "product_hero",
+    "features",
+    "testimonials",
+    "before_after",
+    "faq"
+  ]
+}
