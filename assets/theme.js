@@ -397,32 +397,34 @@
   }
 
   function initCountUp() {
-    const cards = document.querySelectorAll('[data-count]');
-    if (!cards.length) return;
+    const statCards = document.querySelectorAll('.stat-card');
+    if (!statCards.length) return;
 
     const observer = new IntersectionObserver((entries) => {
       entries.forEach((entry) => {
         if (!entry.isIntersecting) return;
-        const el = entry.target;
-        const target = parseInt(el.getAttribute('data-count'), 10);
-        const suffix = el.getAttribute('data-count-suffix') || '+';
-        const duration = 1200;
-        const start = performance.now();
+        observer.unobserve(entry.target);
 
-        function step(now) {
-          const elapsed = now - start;
-          const progress = Math.min(elapsed / duration, 1);
-          const eased = 1 - Math.pow(1 - progress, 3);
-          el.textContent = Math.round(eased * target) + suffix;
-          if (progress < 1) requestAnimationFrame(step);
-        }
+        entry.target.querySelectorAll('[data-count]').forEach((el) => {
+          const target = parseInt(el.getAttribute('data-count'), 10);
+          if (isNaN(target)) return;
+          const suffix = '+';
+          const duration = 1400;
+          const start = performance.now();
 
-        requestAnimationFrame(step);
-        observer.unobserve(el);
+          function step(now) {
+            const elapsed = now - start;
+            const progress = Math.min(elapsed / duration, 1);
+            const eased = 1 - Math.pow(1 - progress, 3);
+            el.textContent = Math.round(eased * target) + suffix;
+            if (progress < 1) requestAnimationFrame(step);
+          }
+          requestAnimationFrame(step);
+        });
       });
-    }, { threshold: 0.5 });
+    }, { threshold: 0 });
 
-    cards.forEach((card) => observer.observe(card));
+    statCards.forEach((card) => observer.observe(card));
   }
 
   function init(scope) {
