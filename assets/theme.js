@@ -231,13 +231,25 @@
         const bundle = form.querySelector('[data-bundle-quantity]:checked') ||
                        form.querySelector('[data-variant-select]:checked');
 
+        const stickyBtns = section.querySelectorAll('[data-sticky-add]');
+        const submit = form.querySelector('[data-add-to-cart]');
+
+        function setLoading(on) {
+          if (submit) submit.disabled = on;
+          stickyBtns.forEach((b) => {
+            b.disabled = on;
+            b.textContent = on ? 'Adding…' : b.getAttribute('data-label') || 'ADD TO CART';
+          });
+        }
+
+        stickyBtns.forEach((b) => { if (!b.getAttribute('data-label')) b.setAttribute('data-label', b.textContent.trim()); });
+
         if (!variantId) {
-          if (message) message.textContent = 'Connect the product in Theme Customizer first.';
+          alert('Product not connected. Please try again or visit the cart page.');
           return;
         }
 
-        const submit = form.querySelector('[data-add-to-cart]');
-        if (submit) submit.disabled = true;
+        setLoading(true);
         if (message) message.textContent = 'Adding…';
 
         try {
@@ -255,20 +267,23 @@
 
           if (!response.ok) {
             const errData = await response.json().catch(() => ({}));
-            throw new Error(errData.description || 'Could not add item to cart.');
+            throw new Error(errData.description || 'Could not add item — please try again.');
           }
+
+          if (message) message.textContent = 'Added to cart!';
+          stickyBtns.forEach((b) => { b.textContent = '✓ Added!'; });
+          setTimeout(() => stickyBtns.forEach((b) => { b.textContent = b.getAttribute('data-label') || 'ADD TO CART'; }), 2000);
 
           try {
             await refreshCart(true);
           } catch (_) {
             window.location.href = '/cart';
-            return;
           }
-          if (message) message.textContent = 'Added to cart!';
         } catch (error) {
           if (message) { message.textContent = error.message; message.style.cssText = 'color:var(--glow);font-weight:700'; }
+          alert(error.message);
         } finally {
-          if (submit) submit.disabled = false;
+          setLoading(false);
         }
       }
 
