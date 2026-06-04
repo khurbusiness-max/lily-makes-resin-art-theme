@@ -224,56 +224,61 @@
         });
       });
 
-      form.addEventListener('submit', async (event) => {
-        event.preventDefault();
+      async function doAddToCart() {
         const message = form.querySelector('[data-form-message]');
         const variantId = variantInput ? variantInput.value : '';
         const quantity = quantityInput ? Number(quantityInput.value || 1) : 1;
-        const bundle = form.querySelector('[data-bundle-quantity]:checked');
+        const bundle = form.querySelector('[data-bundle-quantity]:checked') ||
+                       form.querySelector('[data-variant-select]:checked');
 
         if (!variantId) {
-          if (message) message.textContent = 'Select the real Shopify product in the theme customizer before selling.';
+          if (message) message.textContent = 'Connect the product in Theme Customizer first.';
           return;
         }
 
         const submit = form.querySelector('[data-add-to-cart]');
         if (submit) submit.disabled = true;
-        if (message) message.textContent = 'Adding...';
+        if (message) message.textContent = 'Adding…';
 
         try {
           const response = await fetch('/cart/add.js', {
             method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-              Accept: 'application/json'
-            },
+            headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
             body: JSON.stringify({
               id: Number(variantId),
               quantity,
               properties: bundle ? {
-                Bundle: bundle.getAttribute('data-bundle-label') || `Buy ${quantity}`
+                Bundle: bundle.getAttribute('data-bundle-label') || ('Qty ' + quantity)
               } : {}
             })
           });
 
-          if (!response.ok) throw new Error('Could not add item.');
-          await refreshCart(true);
-          if (message) message.textContent = 'Added to cart.';
+          if (!response.ok) {
+            const errData = await response.json().catch(() => ({}));
+            throw new Error(errData.description || 'Could not add item to cart.');
+          }
+
+          try {
+            await refreshCart(true);
+          } catch (_) {
+            window.location.href = '/cart';
+            return;
+          }
+          if (message) message.textContent = 'Added to cart!';
         } catch (error) {
-          if (message) message.textContent = error.message;
+          if (message) { message.textContent = error.message; message.style.cssText = 'color:var(--glow);font-weight:700'; }
         } finally {
           if (submit) submit.disabled = false;
         }
+      }
+
+      form.addEventListener('submit', (event) => {
+        event.preventDefault();
+        doAddToCart();
       });
 
       section.querySelectorAll('[data-sticky-add]').forEach((button) => {
-        button.addEventListener('click', () => {
-          if (typeof form.requestSubmit === 'function') {
-            form.requestSubmit();
-          } else {
-            form.dispatchEvent(new Event('submit', { cancelable: true, bubbles: true }));
-          }
-        });
+        button.addEventListener('click', () => doAddToCart());
       });
 
       updateVariant();
