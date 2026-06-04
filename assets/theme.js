@@ -151,6 +151,25 @@
       const productData = productScript ? JSON.parse(productScript.textContent) : null;
       const selectedOptions = productData && productData.variants.length ? [...productData.variants[0].options] : [];
 
+      function applyVariantPrice(variant) {
+        if (!variant) return;
+        const submit = form.querySelector('[data-add-to-cart]');
+        if (submit) submit.disabled = !variant.available;
+
+        const priceStr = formatMoney(variant.price);
+        section.querySelectorAll('[data-price-display]').forEach((el) => { el.textContent = priceStr; });
+
+        if (variant.compare_at_price > variant.price) {
+          const compareStr = formatMoney(variant.compare_at_price);
+          const rawSave = Math.round((variant.compare_at_price - variant.price) * 100 / variant.compare_at_price);
+          section.querySelectorAll('[data-compare-display]').forEach((el) => { el.textContent = compareStr; el.hidden = false; });
+          section.querySelectorAll('[data-save-display]').forEach((el) => { el.textContent = 'SAVE ' + rawSave + '%'; el.hidden = false; });
+        } else {
+          section.querySelectorAll('[data-compare-display]').forEach((el) => { el.hidden = true; });
+          section.querySelectorAll('[data-save-display]').forEach((el) => { el.hidden = true; });
+        }
+      }
+
       function updateVariant() {
         if (!productData || !variantInput) return;
         const variant = productData.variants.find((candidate) => {
@@ -160,21 +179,7 @@
         });
         if (variant) {
           variantInput.value = variant.id;
-          const submit = form.querySelector('[data-add-to-cart]');
-          if (submit) submit.disabled = !variant.available;
-
-          const priceStr = formatMoney(variant.price);
-          section.querySelectorAll('[data-price-display]').forEach((el) => { el.textContent = priceStr; });
-
-          if (variant.compare_at_price > variant.price) {
-            const compareStr = formatMoney(variant.compare_at_price);
-            const rawSave = Math.round((variant.compare_at_price - variant.price) * 100 / variant.compare_at_price);
-            section.querySelectorAll('[data-compare-display]').forEach((el) => { el.textContent = compareStr; el.hidden = false; });
-            section.querySelectorAll('[data-save-display]').forEach((el) => { el.textContent = 'SAVE ' + rawSave + '%'; el.hidden = false; });
-          } else {
-            section.querySelectorAll('[data-compare-display]').forEach((el) => { el.hidden = true; });
-            section.querySelectorAll('[data-save-display]').forEach((el) => { el.hidden = true; });
-          }
+          applyVariantPrice(variant);
         }
       }
 
@@ -193,14 +198,25 @@
         });
       });
 
-      form.querySelectorAll('[data-bundle-quantity]').forEach((input) => {
+      function syncBundleCards() {
+        form.querySelectorAll('.bundle-card').forEach((card) => {
+          const radio = card.querySelector('input[type="radio"]');
+          card.classList.toggle('is-active', radio && radio.checked);
+        });
+      }
+
+      form.querySelectorAll('[data-bundle-quantity], [data-variant-select]').forEach((input) => {
         input.addEventListener('change', () => {
-          const quantity = input.getAttribute('data-bundle-quantity') || '1';
-          if (quantityInput) quantityInput.value = quantity;
-          form.querySelectorAll('.bundle-card').forEach((card) => {
-            const radio = card.querySelector('[data-bundle-quantity]');
-            card.classList.toggle('is-active', radio && radio.checked);
-          });
+          const variantId = input.getAttribute('data-variant-select');
+          if (variantId) {
+            if (variantInput) variantInput.value = variantId;
+            const variant = productData ? productData.variants.find((v) => String(v.id) === String(variantId)) : null;
+            if (variant) applyVariantPrice(variant);
+          } else {
+            const quantity = input.getAttribute('data-bundle-quantity') || '1';
+            if (quantityInput) quantityInput.value = quantity;
+          }
+          syncBundleCards();
         });
       });
 

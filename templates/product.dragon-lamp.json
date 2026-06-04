@@ -91,6 +91,7 @@
         "compare_text": "$119.95",
         "save_badge": "SAVE 25%",
         "variant_label": "Size",
+        "bundle_as_variant": true,
         "bundle_heading": "CHOOSE YOUR SIZE",
         "bundle_1_label": "Small — 15×10cm (Desk Size)",
         "bundle_1_price": "$89.95",

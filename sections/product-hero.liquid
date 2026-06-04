@@ -139,21 +139,24 @@
               {{ featured_product | json }}
             </script>
 
-            <fieldset class="option-fieldset" data-option-group>
-              <legend>{{ section.settings.variant_label }}</legend>
-              {%- for variant in featured_product.variants -%}
-                <label
-                  class="option-pill{% if variant.id == selected_variant.id %} is-active{% endif %}"
-                  data-option-value="{{ variant.title | escape }}"
-                  data-option-index="0"
-                >
-                  <input type="radio" name="id" value="{{ variant.id }}" {% if variant.id == selected_variant.id %}checked{% endif %} {% unless variant.available %}disabled{% endunless %} style="display:none;">
-                  {{ variant.title }}
-                </label>
-              {%- endfor -%}
-            </fieldset>
-
-            <input type="hidden" data-variant-id value="{{ selected_variant.id }}">
+            {%- unless section.settings.bundle_as_variant -%}
+              <fieldset class="option-fieldset" data-option-group>
+                <legend>{{ section.settings.variant_label }}</legend>
+                {%- for variant in featured_product.variants -%}
+                  <label
+                    class="option-pill{% if variant.id == selected_variant.id %} is-active{% endif %}"
+                    data-option-value="{{ variant.title | escape }}"
+                    data-option-index="0"
+                  >
+                    <input type="radio" name="id" value="{{ variant.id }}" {% if variant.id == selected_variant.id %}checked{% endif %} {% unless variant.available %}disabled{% endunless %} style="display:none;">
+                    {{ variant.title }}
+                  </label>
+                {%- endfor -%}
+              </fieldset>
+              <input type="hidden" data-variant-id value="{{ selected_variant.id }}">
+            {%- else -%}
+              <input type="hidden" name="id" data-variant-id value="{{ selected_variant.id }}">
+            {%- endunless -%}
           {%- else -%}
             <input type="hidden" name="id" data-variant-id value="">
           {%- endif -%}
@@ -167,26 +170,56 @@
           <fieldset class="bundle-options">
             <legend class="visually-hidden">{{ section.settings.bundle_heading }}</legend>
 
-            <label class="bundle-card is-active">
-              <input type="radio" name="bundle" value="1" data-bundle-quantity="1" data-bundle-label="{{ section.settings.bundle_1_label }}" checked>
-              <span><strong>{{ section.settings.bundle_1_label }}</strong></span>
-              <span class="bundle-card__price">
-                <strong>{{ section.settings.bundle_1_price }}</strong>
-                <s>{{ section.settings.bundle_1_compare }}</s>
-              </span>
-            </label>
+            {%- if section.settings.bundle_as_variant and featured_product != blank -%}
+              {%- assign sorted_prices = featured_product.variants | map: 'price' | sort -%}
+              {%- assign min_price = sorted_prices | first -%}
+              {%- assign max_price = sorted_prices | last -%}
+              {%- for variant in featured_product.variants -%}
+                {%- if variant.price == min_price -%}
+                  {%- assign size_word = 'Small' -%}
+                {%- elsif variant.price == max_price -%}
+                  {%- assign size_word = 'Extra Large' -%}
+                {%- else -%}
+                  {%- assign size_word = 'Large' -%}
+                {%- endif -%}
+                <label class="bundle-card{% if variant.id == selected_variant.id %} is-active{% endif %}">
+                  <input type="radio" name="bundle"
+                         data-variant-select="{{ variant.id }}"
+                         data-bundle-label="{{ size_word }} — {{ variant.title | escape }}"
+                         {% if variant.id == selected_variant.id %}checked{% endif %}
+                         {% unless variant.available %}disabled{% endunless %}>
+                  <span>
+                    <strong>{{ size_word }} — {{ variant.title }}</strong>
+                    {%- if variant.price != min_price and variant.price != max_price -%}<em>Most Popular</em>{%- endif -%}
+                  </span>
+                  <span class="bundle-card__price">
+                    <strong>{{ variant.price | money }}</strong>
+                    {%- if variant.compare_at_price > variant.price -%}<s>{{ variant.compare_at_price | money }}</s>{%- endif -%}
+                  </span>
+                </label>
+              {%- endfor -%}
+            {%- else -%}
+              <label class="bundle-card is-active">
+                <input type="radio" name="bundle" value="1" data-bundle-quantity="1" data-bundle-label="{{ section.settings.bundle_1_label }}" checked>
+                <span><strong>{{ section.settings.bundle_1_label }}</strong></span>
+                <span class="bundle-card__price">
+                  <strong>{{ section.settings.bundle_1_price }}</strong>
+                  <s>{{ section.settings.bundle_1_compare }}</s>
+                </span>
+              </label>
 
-            <label class="bundle-card">
-              <input type="radio" name="bundle" value="2" data-bundle-quantity="2" data-bundle-label="{{ section.settings.bundle_2_label }}">
-              <span>
-                <strong>{{ section.settings.bundle_2_label }}</strong>
-                <em>{{ section.settings.bundle_2_badge }}</em>
-              </span>
-              <span class="bundle-card__price">
-                <strong>{{ section.settings.bundle_2_price }}</strong>
-                <s>{{ section.settings.bundle_2_compare }}</s>
-              </span>
-            </label>
+              <label class="bundle-card">
+                <input type="radio" name="bundle" value="2" data-bundle-quantity="2" data-bundle-label="{{ section.settings.bundle_2_label }}">
+                <span>
+                  <strong>{{ section.settings.bundle_2_label }}</strong>
+                  <em>{{ section.settings.bundle_2_badge }}</em>
+                </span>
+                <span class="bundle-card__price">
+                  <strong>{{ section.settings.bundle_2_price }}</strong>
+                  <s>{{ section.settings.bundle_2_compare }}</s>
+                </span>
+              </label>
+            {%- endif -%}
           </fieldset>
 
           {%- if section.settings.urgency_text != blank -%}
@@ -299,6 +332,7 @@
     { "type": "text", "id": "compare_text", "label": "Fallback compare-at price", "default": "$129.95" },
     { "type": "text", "id": "save_badge", "label": "Discount badge", "default": "SAVE 30%" },
     { "type": "text", "id": "variant_label", "label": "Variant label", "default": "Size" },
+    { "type": "checkbox", "id": "bundle_as_variant", "label": "Use size cards as the variant selector (hides the small pill row)", "default": false },
     { "type": "text", "id": "bundle_heading", "label": "Bundle heading", "default": "BUNDLE & SAVE" },
     { "type": "text", "id": "bundle_1_label", "label": "Bundle 1 label", "default": "Buy 1 — Keep for yourself" },
     { "type": "text", "id": "bundle_1_price", "label": "Bundle 1 price", "default": "$89.95" },
