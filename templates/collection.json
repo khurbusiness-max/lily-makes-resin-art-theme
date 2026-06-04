@@ -16,16 +16,20 @@
         "heading": "Shop All Lamps",
         "subheading": "Every lamp hand-poured by Lily — one at a time, never mass-produced.",
         "products_to_show": 8,
+        "fallback_product": "resin-night-light-creative-craft-handmade-decor-for-home-office-desk-holiday-birthday-party-festival-gift-ornament",
         "fallback_1_title": "Godzilla Resin Glow Lamp",
         "fallback_1_price": "$89.95",
         "fallback_1_compare": "$129.95",
         "fallback_1_badge": "Best Seller",
         "fallback_1_reviews": "60+ reviews",
+        "fallback_1_image": "shopify://shop_images/8th_clip.png",
+        "fallback_product_2": "resin-lamp-resin-lamp-anime-night-fury-white-fury-toothless-light-wrath-epoxy-resin-lamp",
         "fallback_2_title": "How to Train Your Dragon Resin Lamp",
         "fallback_2_price": "$89.95",
         "fallback_2_compare": "$119.95",
         "fallback_2_badge": "New Arrival",
-        "fallback_2_reviews": "45+ reviews"
+        "fallback_2_reviews": "45+ reviews",
+        "fallback_2_image": "shopify://shop_images/grok-image-024dddf3-b370-4fb3-ad8d-d4e4c706ddb5.jpg"
       }
     }
   },
