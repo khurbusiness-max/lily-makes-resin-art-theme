@@ -150,17 +150,20 @@
       const productScript = form.querySelector('[data-product-json]');
       const productData = productScript ? JSON.parse(productScript.textContent) : null;
       const selectedOptions = productData && productData.variants.length ? [...productData.variants[0].options] : [];
+      let currentVariant = null;
 
-      function applyVariantPrice(variant) {
+      function applyVariantPrice(variant, quantity) {
         if (!variant) return;
+        currentVariant = variant;
+        const qty = quantity && quantity > 0 ? quantity : 1;
         const submit = form.querySelector('[data-add-to-cart]');
         if (submit) submit.disabled = !variant.available;
 
-        const priceStr = formatMoney(variant.price);
+        const priceStr = formatMoney(variant.price * qty);
         section.querySelectorAll('[data-price-display]').forEach((el) => { el.textContent = priceStr; });
 
         if (variant.compare_at_price > variant.price) {
-          const compareStr = formatMoney(variant.compare_at_price);
+          const compareStr = formatMoney(variant.compare_at_price * qty);
           const rawSave = Math.round((variant.compare_at_price - variant.price) * 100 / variant.compare_at_price);
           section.querySelectorAll('[data-compare-display]').forEach((el) => { el.textContent = compareStr; el.hidden = false; });
           section.querySelectorAll('[data-save-display]').forEach((el) => { el.textContent = 'SAVE ' + rawSave + '%'; el.hidden = false; });
@@ -215,6 +218,7 @@
           } else {
             const quantity = input.getAttribute('data-bundle-quantity') || '1';
             if (quantityInput) quantityInput.value = quantity;
+            if (currentVariant) applyVariantPrice(currentVariant, Number(quantity));
           }
           syncBundleCards();
         });
@@ -435,9 +439,11 @@
         observer.unobserve(entry.target);
 
         entry.target.querySelectorAll('[data-count]').forEach((el) => {
+          if (el.dataset.counted) return;
           const target = parseInt(el.getAttribute('data-count'), 10);
-          if (isNaN(target)) return;
-          const suffix = '+';
+          const suffix = el.getAttribute('data-suffix') || '+';
+          if (isNaN(target)) { return; }
+          el.dataset.counted = 'true';
           const duration = 1400;
           const start = performance.now();
 

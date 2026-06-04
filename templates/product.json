@@ -221,10 +221,13 @@
         "show_stats": true,
         "stat_1_value": "60",
         "stat_1_label": "Verified Reviews",
+        "stat_1_suffix": "+",
         "stat_2_value": "127",
         "stat_2_label": "Happy Customers This Week",
+        "stat_2_suffix": "+",
         "stat_3_value": "100",
-        "stat_3_label": "% Satisfaction Rate",
+        "stat_3_label": "Satisfaction Rate",
+        "stat_3_suffix": "%",
         "stat_4_value": "30-Day",
         "stat_4_label": "Money-Back Guarantee"
       }
