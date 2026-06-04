@@ -117,9 +117,9 @@
         </ul>
 
         <div class="price-line">
-          <span class="price">{{ price_text }}</span>
-          <s>{{ compare_text }}</s>
-          <span class="save-badge">{{ section.settings.save_badge }}</span>
+          <span class="price" data-price-display>{{ price_text }}</span>
+          <s data-compare-display>{{ compare_text }}</s>
+          <span class="save-badge" data-save-display>{{ section.settings.save_badge }}</span>
         </div>
 
         {%- if section.settings.show_countdown -%}
@@ -275,7 +275,7 @@
     <div class="sticky-atc" data-sticky-atc>
       <div>
         <strong>{{ product_title }}</strong>
-        <p><span>{{ price_text }}</span> <s>{{ compare_text }}</s> <em>{{ section.settings.save_badge }}</em></p>
+        <p><span data-price-display>{{ price_text }}</span> <s data-compare-display>{{ compare_text }}</s> <em data-save-display>{{ section.settings.save_badge }}</em></p>
       </div>
       <button class="button button--primary" type="button" data-sticky-add>
         {{ section.settings.add_to_cart_text }}

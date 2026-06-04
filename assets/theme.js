@@ -162,6 +162,19 @@
           variantInput.value = variant.id;
           const submit = form.querySelector('[data-add-to-cart]');
           if (submit) submit.disabled = !variant.available;
+
+          const priceStr = formatMoney(variant.price);
+          section.querySelectorAll('[data-price-display]').forEach((el) => { el.textContent = priceStr; });
+
+          if (variant.compare_at_price > variant.price) {
+            const compareStr = formatMoney(variant.compare_at_price);
+            const rawSave = Math.round((variant.compare_at_price - variant.price) * 100 / variant.compare_at_price);
+            section.querySelectorAll('[data-compare-display]').forEach((el) => { el.textContent = compareStr; el.hidden = false; });
+            section.querySelectorAll('[data-save-display]').forEach((el) => { el.textContent = 'SAVE ' + rawSave + '%'; el.hidden = false; });
+          } else {
+            section.querySelectorAll('[data-compare-display]').forEach((el) => { el.hidden = true; });
+            section.querySelectorAll('[data-save-display]').forEach((el) => { el.hidden = true; });
+          }
         }
       }
 
