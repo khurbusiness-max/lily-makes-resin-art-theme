@@ -241,7 +241,7 @@ body::before {
   color: var(--ink);
   white-space: nowrap;
 }
-.site-header__logo span { color: var(--glow); }
+.site-header__logo span, .logo-accent { color: var(--glow); }
 
 .icon-button {
   position: relative;
