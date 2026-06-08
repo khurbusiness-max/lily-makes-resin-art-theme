@@ -6,6 +6,7 @@
   assign card_reviews = fallback_reviews | default: '60+ reviews'
   assign card_url = routes.root_url
   assign card_image = fallback_image
+  assign save_pct = 0
 
   if product != blank
     assign card_title = product.title
